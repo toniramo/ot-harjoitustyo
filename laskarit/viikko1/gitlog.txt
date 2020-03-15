@@ -1,0 +1,114 @@
+commit c76327b2c9a325a5f3f19bab20458e9258551667
+Author: Toni Rämö <toni.ramo@helsinki.fi>
+Date:   Sun Mar 15 15:47:44 2020 +0200
+
+    file1 poistettu, file2 nimetty file22
+
+ tiedostoja/file2             | 0
+ tiedostoja/{file1 => file22} | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+
+commit fb66a1c64ad6a56c84ca6c5d2ff36165c4779b38
+Author: Toni Rämö <toni.ramo@helsinki.fi>
+Date:   Sun Mar 15 15:41:18 2020 +0200
+
+    tiedostoja/, file1, file2 ja file3 luoto
+
+ tiedostoja/file1 | 0
+ tiedostoja/file2 | 0
+ tiedostoja/file3 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 1f5bcf0652190b4713686efdf38832708926bdd0
+Author: Toni Rämö <toni.ramo@helsinki.fi>
+Date:   Sun Mar 15 15:31:12 2020 +0200
+
+    muutettu eka.txt ja kolmas.txt
+
+ eka.txt    | 3 ++-
+ kolmas.txt | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+commit ef3be4796bf529e9b864d08ebe31ac232c400384
+Author: Toni Rämö <toni.ramo@helsinki.fi>
+Date:   Sun Mar 15 15:28:48 2020 +0200
+
+    tiedost.txt uudelleennimetty eka.txt:ksi
+
+ tiedosto.txt => eka.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit aa2a77ab90d34aaccf716d25fadeb2c8fb3ea661
+Author: Toni Rämö <toni.ramo@helsinki.fi>
+Date:   Sun Mar 15 15:27:39 2020 +0200
+
+    toinen.txt poistettu
+
+ toinen.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 8a052fca6f730d255e9f75a96f593e3e53e50e25
+Author: Toni Rämö <toni.ramo@helsinki.fi>
+Date:   Sun Mar 15 15:25:05 2020 +0200
+
+    lisää muutoksia tiedosto.txt
+
+ tiedosto.txt | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+commit 124cded8137394cc820dfbf0d7fe856b22f3f655
+Author: Toni Rämö <toni.ramo@helsinki.fi>
+Date:   Sun Mar 15 15:23:52 2020 +0200
+
+    muokattu tiedosto.txt sisältöä
+
+ tiedosto.txt | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+commit b7ea1a88a8b3e30c7ddbdbaf02aba80da2b6516f
+Author: Toni Rämö <toni.ramo@helsinki.fi>
+Date:   Sun Mar 15 15:14:34 2020 +0200
+
+    kansio stuff ja tiedosto neljas.txt luotu
+
+ stuff/neljas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit b07acf3abf9e71ab921f2edec7de645f26752e72
+Author: Toni Rämö <toni.ramo@helsinki.fi>
+Date:   Sun Mar 15 15:13:26 2020 +0200
+
+    toinen.txt ja kolmas.txt muokattu
+
+ kolmas.txt | 1 +
+ toinen.txt | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit bd3f720138c3dc9da4a4cffc6419697c28aea5b8
+Author: Toni Rämö <toni.ramo@helsinki.fi>
+Date:   Sun Mar 15 15:12:16 2020 +0200
+
+    kolmas.txt luotu
+
+ kolmas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 007b52c10b4e1e6dbb4b2fcebfbf6373707e3d8d
+Author: Toni Rämö <toni.ramo@helsinki.fi>
+Date:   Sun Mar 15 15:09:44 2020 +0200
+
+    muutos ja lisäys
+
+ tiedosto.txt | 1 +
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+)
+
+commit 4f3d0867d6cedbb17706d113bdbf3b503ec45dd3
+Author: Toni Rämö <toni.ramo@helsinki.fi>
+Date:   Sun Mar 15 15:06:49 2020 +0200
+
+    tiedosto.txt luotu
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
