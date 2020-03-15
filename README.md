@@ -7,5 +7,5 @@ Tämä repositorio sisältää Helsingin yliopiston  opiskelijan **Toni Rämö**
 Lisätietoja kurssista ja harjoitusten sisällöstä on saatavilla omasta [GitHub-repositoriosta](https://github.com/mluukkai/ohjelmistotekniikka-kevat-2020).
 
 ## Palautetut tehtävät
-
+- [x] viikon 1 laskarit
 
