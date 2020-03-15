@@ -1,3 +1,4 @@
+Harjoituksen mukainen lisäys.
 commit c76327b2c9a325a5f3f19bab20458e9258551667
 Author: Toni Rämö <toni.ramo@helsinki.fi>
 Date:   Sun Mar 15 15:47:44 2020 +0200
