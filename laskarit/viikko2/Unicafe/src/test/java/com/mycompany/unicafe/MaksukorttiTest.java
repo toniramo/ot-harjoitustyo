@@ -19,8 +19,13 @@ public class MaksukorttiTest {
     }
     
     @Test
-    public void kortinSaldoAlussaOikein() {
+    public void kortinSaldoAlussaOikeinToStringilla() {
         assertEquals("saldo: 0.10", kortti.toString());
+    }
+    
+    @Test
+    public void kortinSaldoAlussaOikeinSaldoMetodilla() {
+        assertEquals(10, kortti.saldo());
     }
     
     @Test
