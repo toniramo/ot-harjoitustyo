@@ -8,5 +8,5 @@ Lisätietoja kurssista ja harjoitusten sisällöstä on saatavilla kurssin omast
 
 ## Palautetut tehtävät
 - [x] viikon 1 [laskarit](https://github.com/toniramo/ot-harjoitustyo/tree/master/laskarit/viikko1)
-- [x] viikon 2 laskarit](https://github.com/toniramo/ot-harjoitustyo/tree/master/laskarit/viikko2)
+- [x] viikon 2 [laskarit](https://github.com/toniramo/ot-harjoitustyo/tree/master/laskarit/viikko2)
 - [ ] viikon 3 laskarit
