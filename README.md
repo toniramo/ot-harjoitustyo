@@ -22,4 +22,6 @@ Lisätietoja kurssista ja harjoitusten sisällöstä on saatavilla kurssin omast
 [UnicafeTestikattavuus.png](https://github.com/toniramo/ot-harjoitustyo/tree/master/laskarit/viikko2/UnicafeTestikattavuus.png)
 
 #### Harjoitustyö
-[vaatimusmaarittely.md]((https://github.com/toniramo/ot-harjoitustyo/tree/master/dokumentointi/vaatimusmaarittely.md)
+[vaatimusmaarittely.md](https://github.com/toniramo/ot-harjoitustyo/tree/master/dokumentointi/vaatimusmaarittely.md)
+
+[tyoaikakirjanpito.md](https://github.com/toniramo/ot-harjoitustyo/tree/master/dokumentointi/tyoaikakirjanpito.md)
