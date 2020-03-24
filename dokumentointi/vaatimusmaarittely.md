@@ -1,4 +1,4 @@
-# Alustava määrittely
+# Vaatimusmäärittely
 
 ## Sovelluksen tarkoitus
 Sovelluksen avulla käyttäjät voivat pitää henkilökohtaista säähavaintopäiväkirjaa lisäämällä havaintokohteilleen päiväkohtaisia merkintöjä ja selata jo tehtyjä muistiinpanoja. Sovellus mahdollistaa merkintöjen tarkastelun visuaalisessa muodossa.
@@ -8,10 +8,10 @@ Sovelluksen perustoiminnallisuuden kannalta olennaista on, että siitä löytyy 
 
 ## Suunnitellut toiminnallisuudet
 ### Ennen kirjautumista
-- Käyttäjä voi luoda käyttäjätunnuksen sovellusta varten
+- käyttäjä voi luoda käyttäjätunnuksen sovellusta varten
   - Tunnuksen on oltava uniikki ja sisältää vähintään yhden merkin
-- Käyttäjä voi kirjautua järjestelmään jo olemassa olevalla tunnuksella
-  - Salasanan käyttöä ei vaadita perustoiminnallisuuden näkökulmasta
+- käyttäjä voi kirjautua järjestelmään jo olemassa olevalla tunnuksella
+  - salasanan käyttöä ei vaadita perustoiminnallisuuden näkökulmasta
 
 ### Kirjauduttua
 - käyttäjä näkee omat säähavaintokohteensa
@@ -41,8 +41,8 @@ Sovelluksen avatuessa käyttöliittymä aukeaa kirjautumissivulle, jossa käytt�
   - olemassaolevan tiedon muokkaaminen
 - edistyneempi käyttäjähallinta ja tiedon jakaminen käyttäjien kesken
   - erilaiset käyttäjäroolit - erityisesti admin-tason käyttäjä-rooli, jonka avulla voi tarkastella, muokata tai jopa poistaa kaikkien käyttäjien tietoja ja oikeuksia 
-  - mahdollisuus jakaa kohdeoikeuksia käyttäjien/ryhmien kesken. 
-  - eritasoiset käyttäjäoikeudet saattavat edellyttää myös salasanan käyttöönottoa.
+  - mahdollisuus jakaa kohdeoikeuksia käyttäjien/ryhmien kesken
+  - eritasoiset käyttäjäoikeudet saattavat edellyttää myös salasanan käyttöönottoa
 - mahdollisuus käyttöliittymän kustomoiduille näkymille
   - esimerkiksi kielen vaihtaminen, tiedon sijoittelu ja näyttäminen/piilottaminen
 - kohteiden, käyttäjien ja havaintojen lisätiedot
