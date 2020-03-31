@@ -20,7 +20,7 @@ public class TextUI {
 
     public void start() {
         while (true) {
-            System.out.println("Enter command: 0=close application, 1=log in, 2=create new user");
+            System.out.println("Enter command (0=close application, 1=log in, 2=create new user):");
             String input = scanner.nextLine();
 
             if (input.equals("0")) {
@@ -63,7 +63,7 @@ public class TextUI {
     public void loggedIn() {
         while (true) {
 
-            System.out.println("Enter command. 0=log out, 1=list sites, 2=choose site (TODO), 3=create new site");
+            System.out.println("Enter command (0=log out, 1=list sites, 2=choose site (TODO), 3=create new site):");
             String input = scanner.nextLine();
 
             if (input.equals("0")) {

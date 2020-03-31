@@ -56,7 +56,6 @@ public class JournalService {
     }
 
     public boolean createSite(Site site) {
-
         try {
             siteDao.createSite(site);
             return true;
@@ -65,7 +64,6 @@ public class JournalService {
             System.out.println("Exception " + e);
 
         }
-
         return false;
     }
 
