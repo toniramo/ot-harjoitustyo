@@ -1,3 +1,5 @@
+package main;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -9,7 +11,7 @@
  * @author toniramo
  */
 
-import java.sql.SQLException;
+
 import java.util.Scanner;
 import domain.*;
 import dao.*;

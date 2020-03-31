@@ -5,6 +5,10 @@
  */
 package ui;
 
+import dao.SQLiteSiteDao;
+import dao.SQLiteUserDao;
+import dao.SiteDao;
+import dao.UserDao;
 import java.util.*;
 import domain.*;
 
@@ -76,7 +80,7 @@ public class TextUI {
                 if (sites.isEmpty()) {
                     System.out.println("No sites found for current user.");
                 } else {
-                    for (Site site: sites) {
+                    for (Site site : sites) {
                         System.out.println(site.toString());
                     }
                 }
@@ -109,5 +113,16 @@ public class TextUI {
             }
             System.out.println("");
         }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        UserDao userDao = new SQLiteUserDao();
+        SiteDao siteDao = new SQLiteSiteDao();
+
+        JournalService service = new JournalService(userDao, siteDao);
+        TextUI ui = new TextUI(service, scanner);
+
+        ui.start();
     }
 }
