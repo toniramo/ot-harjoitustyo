@@ -1,6 +1,7 @@
 #harjoitustyö
 WeatherObservationJournal/target
 WeatherObservationJournal/*.db
+WeatherObservationJournal/nbactions.xml
 
 #laskarit
 laskarit/viikko2/Maksukortti/target
