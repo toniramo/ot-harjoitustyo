@@ -3,14 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ui;
+package woj.ui;
 
-import dao.*;
-import domain.*;
+import java.util.List;
+import woj.domain.JournalService;
+import woj.dao.SiteDao;
+import woj.dao.UserDao;
+import woj.dao.SQLiteUserDao;
+import woj.dao.SQLiteSiteDao;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -18,19 +21,15 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import woj.domain.Site;
 
 /**
  *
@@ -43,6 +42,10 @@ public class GUI extends Application {
     private Scene logInScene;
     private Scene loggedInScene;
     private Scene createUserScene;
+    private Scene addSiteScene;
+
+    int windowHeight;
+    int windowWidth;
 
 //    public GUI(JournalService service) {
 //        this.service=service;
@@ -57,21 +60,23 @@ public class GUI extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        int windowHeight = 800;
-        int windowWidth = 500;
+        windowHeight = 800;
+        windowWidth = 500;
 
         //Title
         stage.setTitle("Weather Observation Journal");
 
         //Grids
         GridPane gridpane = createLogInScreenPane();
-        GridPane sitesPane = createSitesScreenPane();
+//        GridPane sitesPane = createSitesScreenPane();
         GridPane newUserPane = createNewUserScreenPane();
+        GridPane addSitePane = createNewUserScreenPane();
 
         //Controls
         addLogInScreenControls(gridpane, stage);
-        addSitesScreenControls(sitesPane, stage);
+//        addSitesScreenControls(sitesPane, stage);
         addCreateNewUserScreenControls(newUserPane, stage);
+        addAddSiteScreenControls(addSitePane, stage);
 
         //BorderPane
         BorderPane borderpane = new BorderPane();
@@ -79,8 +84,9 @@ public class GUI extends Application {
         BorderPane.setMargin(gridpane, new Insets(20, 20, 20, 20));
 
         logInScene = new Scene(borderpane, windowWidth, windowHeight);
-        loggedInScene = new Scene(sitesPane, windowWidth, windowHeight);
+//        loggedInScene = new Scene(sitesPane, windowWidth, windowHeight);
         createUserScene = new Scene(newUserPane, windowWidth, windowHeight);
+        addSiteScene = new Scene(addSitePane, windowWidth, windowHeight);
 
         stage.setScene(logInScene);
         stage.show();
@@ -88,6 +94,12 @@ public class GUI extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    private void createSitesScene(Stage stage) {
+        GridPane sitesPane = createSitesScreenPane();
+        addSitesScreenControls(sitesPane, stage);
+        loggedInScene = new Scene(sitesPane, windowWidth, windowHeight);
     }
 
     private GridPane createLogInScreenPane() {
@@ -141,15 +153,18 @@ public class GUI extends Application {
         logInButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
-                if (usernameField.getText().isEmpty()) {
+                String username = usernameField.getText();
+                usernameField.clear();
+                
+                if (username.isEmpty()) {
                     showAlert(Alert.AlertType.ERROR, gridpane.getScene().getWindow(), "Loggin in Error!", "Please enter username");
                     return;
                 }
-                String username = usernameField.getText();
 
                 boolean loggedIn = service.login(username);
                 if (loggedIn) {
                     showAlert(Alert.AlertType.INFORMATION, gridpane.getScene().getWindow(), "Logging in Successful", "Welcome " + service.getLoggedUser().getName() + " (" + username + ")!");
+                    createSitesScene(stage);
                     stage.setScene(loggedInScene);
                     return;
 
@@ -211,18 +226,21 @@ public class GUI extends Application {
         createUserButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
-                if (usernameField.getText().isEmpty() || nameField.getText().isEmpty()) {
+                String username = usernameField.getText();
+                String name = nameField.getText();
+
+                usernameField.clear();
+                nameField.clear();
+
+                if (username.isEmpty() || name.isEmpty()) {
                     showAlert(Alert.AlertType.ERROR, gridpane.getScene().getWindow(), "User Creation Error", "Please enter username and actual name of the user.");
                     return;
                 }
 
-                if (usernameField.getText().length() < 2) {
+                if (username.length() < 2) {
                     showAlert(Alert.AlertType.ERROR, gridpane.getScene().getWindow(), "User Creation Error", "Please use username that is at least 2 characters long.");
                     return;
                 }
-
-                String username = usernameField.getText();
-                String name = nameField.getText();
 
                 boolean userCreated = service.createUser(username, name);
                 if (userCreated) {
@@ -244,11 +262,16 @@ public class GUI extends Application {
         gridpane.add(cancelButton, 0, 5);
 
         cancelButton.setOnAction((ActionEvent t) -> {
+            usernameField.clear();
+            nameField.clear();
             stage.setScene(logInScene);
         });
     }
 
     private void addSitesScreenControls(GridPane gridpane, Stage stage) {
+        VBox sitesBox = listSites();
+        gridpane.add(sitesBox, 0, 1);
+
         //Log out button
         Button logOutButton = new Button("Log out");
         gridpane.add(logOutButton, 0, 0);
@@ -256,10 +279,109 @@ public class GUI extends Application {
         logOutButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
-                showAlert(Alert.AlertType.INFORMATION, gridpane.getScene().getWindow(), "Loggin out", "Logging out user " + service.getLoggedUser().getName() + " (" + service.getLoggedUser().getUsername() + ").");
+                showAlert(Alert.AlertType.INFORMATION, gridpane.getScene().getWindow(), "Logged out", "Logged out user " + service.getLoggedUser().getName() + " (" + service.getLoggedUser().getUsername() + ").");
                 stage.setScene(logInScene);
             }
         });
+
+        //Create site button
+        Button addSiteButton = new Button("+ Add new site");
+        gridpane.add(addSiteButton, 0, 2);
+
+        addSiteButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                stage.setScene(addSiteScene);
+            }
+
+        });
+    }
+
+    private void addAddSiteScreenControls(GridPane gridpane, Stage stage) {
+        Label addSiteLabel = new Label("Add new site");
+        gridpane.add(addSiteLabel, 0, 0);
+
+        TextField sitenameField = new TextField();
+        sitenameField.setPromptText("Add unique site name");
+        gridpane.add(sitenameField, 0, 1);
+
+        TextField siteAddressField = new TextField();
+        siteAddressField.setPromptText("Add site address");
+        gridpane.add(siteAddressField, 0, 2);
+
+        TextField siteDescriptionField = new TextField();
+        siteDescriptionField.setPromptText("Add site description (optional)");
+        gridpane.add(siteDescriptionField, 0, 3);
+
+        Button addSiteButton = new Button("+ Add new site");
+        gridpane.add(addSiteButton, 0, 4);
+
+        Button cancelButton = new Button("Cancel adding new site");
+        gridpane.add(cancelButton, 0, 5);
+
+        cancelButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                sitenameField.clear();
+                siteAddressField.clear();
+                siteDescriptionField.clear();
+                createSitesScene(stage);
+                stage.setScene(loggedInScene);
+                return;
+            }
+
+        });
+        addSiteButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                String sitename = sitenameField.getText();
+                String siteAddress = siteAddressField.getText();
+                String siteDescription = siteDescriptionField.getText();
+
+                sitenameField.clear();
+                siteAddressField.clear();
+                siteDescriptionField.clear();
+
+                if (sitename.length() < 1 || siteAddress.length() < 3) {
+                    showAlert(Alert.AlertType.ERROR, gridpane.getScene().getWindow(), "Site creation Error", "Please ensure you have entered site name of at least 1 character long and site address of at least 3 characters long.");
+                    return;
+                }
+                Site site = new Site();
+                site.setSitename(sitename);
+                site.setAddress(siteAddress);
+                site.setDescription(siteDescription);
+
+                boolean siteCreated = service.createSite(site);
+
+                if (siteCreated) {
+                    showAlert(Alert.AlertType.INFORMATION, gridpane.getScene().getWindow(), "Site added Successfully", "Site with following information created. " + site.toString());
+                    createSitesScene(stage);
+                    stage.setScene(loggedInScene);
+                } else {
+                    showAlert(Alert.AlertType.ERROR, gridpane.getScene().getWindow(), "Adding new site failed!", "Adding site with following information failed. Ensure that the sitename is unique" + site.toString());
+                }
+
+            }
+
+        });
+    }
+
+    private VBox listSites() {
+        List<Site> sites = service.getSitesOfLoggedUser();
+
+        VBox sitesBox = new VBox();
+        for (Site site : sites) {
+            Label siteName = new Label(site.getSitename());
+            siteName.setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
+            Label siteAddress = new Label(site.getAddress());
+            Label siteDescription = new Label(site.getDescription());
+            VBox siteBox = new VBox();
+            siteBox.getChildren().addAll(siteName, siteAddress, siteDescription);
+            sitesBox.getChildren().add(siteBox);
+        }
+
+        return sitesBox;
+
     }
 
     private void showAlert(Alert.AlertType alertType, Window owner, String title, String msg) {

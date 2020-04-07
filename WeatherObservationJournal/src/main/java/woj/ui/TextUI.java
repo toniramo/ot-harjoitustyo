@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ui;
+package woj.ui;
 
-import dao.SQLiteSiteDao;
-import dao.SQLiteUserDao;
-import dao.SiteDao;
-import dao.UserDao;
+import woj.domain.JournalService;
+import woj.domain.Site;
+import woj.dao.SQLiteSiteDao;
+import woj.dao.SQLiteUserDao;
+import woj.dao.SiteDao;
+import woj.dao.UserDao;
 import java.util.*;
-import domain.*;
 
 public class TextUI {
 

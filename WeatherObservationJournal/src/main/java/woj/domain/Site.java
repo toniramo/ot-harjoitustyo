@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package domain;
+package woj.domain;
+
+import java.util.Objects;
 
 /**
  *
@@ -15,6 +17,41 @@ public class Site {
     private String description;
     private String createdBy;
 
+    public Site() {
+        
+    }
+    
+    public Site(String sitename, String address, String description) {
+        this.sitename = sitename;
+        this.address = address;
+        this.description = description;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Site other = (Site) obj;
+        if (!Objects.equals(this.sitename, other.sitename)) {
+            return false;
+        }
+
+        return true;
+    }
+    
     public String getSitename() {
         return sitename;
     }

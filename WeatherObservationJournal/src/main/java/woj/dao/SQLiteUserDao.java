@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package woj.dao;
 
+import woj.domain.User;
 import java.sql.*;
-import domain.*;
 import java.util.Set;
 
 /**

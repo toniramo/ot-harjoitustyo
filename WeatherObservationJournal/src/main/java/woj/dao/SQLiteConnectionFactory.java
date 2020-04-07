@@ -1,4 +1,4 @@
-package dao;
+package woj.dao;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -17,7 +17,7 @@ import java.sql.*;
 public class SQLiteConnectionFactory {
 
     String driverClassName = "org.sqlite.JDBC";
-    String url = "jdbc:sqlite:test.db"; // TODO read from configuration file
+    String url = "jdbc:sqlite:woj.db"; // TODO read from configuration file
 
     private static SQLiteConnectionFactory connectionFactory = null;
 

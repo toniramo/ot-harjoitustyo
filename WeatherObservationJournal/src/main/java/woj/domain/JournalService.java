@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package domain;
+package woj.domain;
 
-import dao.*;
+import woj.dao.SiteDao;
+import woj.dao.UserDao;
 import java.util.*;
 
 /**
@@ -56,6 +57,12 @@ public class JournalService {
     }
 
     public boolean createSite(Site site) {
+        site.setCreatedBy(loggedIn.getUsername());
+        
+        if (this.getSitesOfLoggedUser().contains(site)) {
+            return false;
+        }
+        
         try {
             siteDao.createSite(site);
             return true;
@@ -64,6 +71,7 @@ public class JournalService {
             System.out.println("Exception " + e);
 
         }
+        
         return false;
     }
 
