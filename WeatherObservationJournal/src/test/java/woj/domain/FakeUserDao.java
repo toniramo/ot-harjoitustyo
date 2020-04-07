@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package domain;
+package woj.domain;
 
-import dao.UserDao;
+import woj.dao.UserDao;
 import java.util.*;
 
 /**
@@ -17,6 +17,7 @@ public class FakeUserDao implements UserDao {
     
     public FakeUserDao() {
         users.add(new User("testikayttaja", "Taneli Tuulispaa"));
+        users.add(new User("testaaja2", "Tiina Testikäyttäjä"));
     }
 
     @Override

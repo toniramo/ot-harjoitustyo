@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package domain;
+package woj.domain;
 
-import dao.SiteDao;
+import woj.domain.Site;
+import woj.dao.SiteDao;
 import java.util.*;
 import java.util.stream.Collectors;
 
