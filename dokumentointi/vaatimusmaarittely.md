@@ -7,7 +7,7 @@ Sovelluksen avulla käyttäjät voivat pitää henkilökohtaista säähavaintop�
 Sovelluksen perustoiminnallisuuden kannalta olennaista on, että siitä löytyy peruskäyttäjärooli, joka mahdollistaa sovelluksen päätoiminnallisuuksien käytön. Jatkokehitystavoitteena on lisätä myös admin-tason käyttäjärooli, joka voi hallinnoida sovelluksen käyttäjiä ja heidän tietojaan sekä tarkastella jokaisen käyttäjän lisäämiä merkintöjä. Peruskäyttäjä voi tarkastella ja hallinnoida vain omia tietojaan - ellei käyttäjähallintaa tehdä edistyneemmäksi jatkossa.
 
 ## Suunnitellut toiminnallisuudet
-:heavy_check_mark: tarkoittaa, että toiminto on toteutettu.
+:heavy_check_mark:-merkki tarkoittaa, että toiminto on toteutettu. (huomaa, että käyttöliittymään voi tulla vielä ulkoisia muutoksia, vaikka toiminto olisikin toteutettu).
 ### Ennen kirjautumista
 - :heavy_check_mark: käyttäjä voi luoda käyttäjätunnuksen sovellusta varten
   - :heavy_check_mark: Tunnuksen on oltava uniikki ja sisältää vähintään yhden merkin
@@ -28,7 +28,7 @@ Sovelluksen perustoiminnallisuuden kannalta olennaista on, että siitä löytyy 
   - käyttöliittymän tulee validoida käyttäjän syöte ja tarkistaa, että syötetyt arvot ovat järkeviä (esimerkiksi lämpötila on [-60,+60]°C, suhteellinen kosteus 0...100 %RH, sademäärä >= 0 mm)
   - sään kuvaus valitaan esityötettyjen vaihtoehtojen joukosta (esimerkkejä mainittu edellä)
   - kommentti voi olla tyhjä tai rajoitettu esimerkiksi 100 merkkiin
-- käyttäjä voi kirjautua ulos
+- :heavy_check_mark: käyttäjä voi kirjautua ulos
 
 ## Käyttöliittymäluonnos
 Sovelluksen avatuessa käyttöliittymä aukeaa kirjautumissivulle, jossa käyttäjä voi joko kirjautua olemassa olevalla tunnuksella sisään tai luoda uuden tunnuksen. Kirjautumisen jälkeen avautuu niin sanottu päänäkymä, jossa listataan kirjautuneen käyttäjän kohteet ja näytetään valitun kohteen yksityiskohtaisemmat havaintotiedot. Näkymästä on mahdollisuus myös siirtyä luomaan uusi kohde tai uusi havaintomerkintä valitulle kohteelle. Käyttöliittymään olisi tarkoitus toteuttaa pudotusvalikko, jonka takaa löytyy toiminnot esimerkiksi käyttäjätietojen hallintaan ja uloskirjautumiseen. Käyttöliittymään on mahdollisuus toteuttaa palauteviestejä syötteiden yhteyteen, jotta käyttäjä tietää onko syöte ollut validi vai ei (ja miksi, jos ei).
