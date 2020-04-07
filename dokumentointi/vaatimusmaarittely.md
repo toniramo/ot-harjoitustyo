@@ -7,16 +7,17 @@ Sovelluksen avulla käyttäjät voivat pitää henkilökohtaista säähavaintop�
 Sovelluksen perustoiminnallisuuden kannalta olennaista on, että siitä löytyy peruskäyttäjärooli, joka mahdollistaa sovelluksen päätoiminnallisuuksien käytön. Jatkokehitystavoitteena on lisätä myös admin-tason käyttäjärooli, joka voi hallinnoida sovelluksen käyttäjiä ja heidän tietojaan sekä tarkastella jokaisen käyttäjän lisäämiä merkintöjä. Peruskäyttäjä voi tarkastella ja hallinnoida vain omia tietojaan - ellei käyttäjähallintaa tehdä edistyneemmäksi jatkossa.
 
 ## Suunnitellut toiminnallisuudet
+:heavy_check_mark: tarkoittaa, että toiminto on toteutettu.
 ### Ennen kirjautumista
-- käyttäjä voi luoda käyttäjätunnuksen sovellusta varten
-  - Tunnuksen on oltava uniikki ja sisältää vähintään yhden merkin
-- käyttäjä voi kirjautua järjestelmään jo olemassa olevalla tunnuksella
-  - salasanan käyttöä ei vaadita perustoiminnallisuuden näkökulmasta
+- :heavy_check_mark: käyttäjä voi luoda käyttäjätunnuksen sovellusta varten
+  - :heavy_check_mark: Tunnuksen on oltava uniikki ja sisältää vähintään yhden merkin
+- :heavy_check_mark: käyttäjä voi kirjautua järjestelmään jo olemassa olevalla tunnuksella
+  - :heavy_check_mark: salasanan käyttöä ei vaadita perustoiminnallisuuden näkökulmasta
 
 ### Kirjauduttua
-- käyttäjä näkee omat säähavaintokohteensa
-- käyttäjä voi luoda uuden havaintokohteen
-  - kohteen nimen tulee olla uniikki ja vähintään yhden merkkin pituinen
+- :heavy_check_mark: käyttäjä näkee omat säähavaintokohteensa
+- :heavy_check_mark: käyttäjä voi luoda uuden havaintokohteen
+  - :heavy_check_mark: kohteen nimen tulee olla uniikki ja vähintään yhden merkkin pituinen
 - käyttäjä voi valita olemassa olevan havaintokohteensa ja tarkastella tämän tietoja
   - käyttöliittymä näyttää kohteelle merkityn numeerisen tiedon graafilla
   - kohteen tietoja voi tarkastella myös päivätasolla, jolloin käyttäjä näkee merkinnän tarkemmat tiedot
