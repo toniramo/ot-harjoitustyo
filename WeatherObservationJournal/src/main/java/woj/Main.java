@@ -9,27 +9,22 @@ package woj;
  *
  * @author toniramo
  */
-import woj.domain.JournalService;
-import woj.ui.GUI;
-import woj.dao.SiteDao;
-import woj.dao.UserDao;
-import woj.dao.SQLiteUserDao;
-import woj.dao.SQLiteSiteDao;
-import java.util.Scanner;
+import woj.ui.*;
 import javafx.application.Application;
-import javafx.stage.Stage;
 
 public class Main {
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        UserDao userDao = new SQLiteUserDao();
-        SiteDao siteDao = new SQLiteSiteDao();
+        //Scanner scanner = new Scanner(System.in);
+//        UserDao userDao = new SQLiteUserDao();
+//        SiteDao siteDao = new SQLiteSiteDao();
+//        ObservationDao observationDao = new SQLiteObservationDao();
 
-        JournalService service = new JournalService(userDao, siteDao);
+//        JournalService service = new JournalService(userDao, siteDao, observationDao);
         //TextUI ui = new TextUI(service, scanner);
         //TextUI (woj.ui.TextUI.java) replaced with Graphical UI (class woj.ui.GUI.java)
 
         Application.launch(GUI.class, args);
+//        Application.launch(TimeSeriesChartFXDemo1.class, args);
     }
 }

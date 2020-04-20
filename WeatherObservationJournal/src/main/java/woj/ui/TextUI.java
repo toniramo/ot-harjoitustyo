@@ -12,6 +12,8 @@ import woj.dao.SQLiteUserDao;
 import woj.dao.SiteDao;
 import woj.dao.UserDao;
 import java.util.*;
+import woj.dao.ObservationDao;
+import woj.dao.SQLiteObservationDao;
 
 public class TextUI {
 
@@ -120,8 +122,9 @@ public class TextUI {
         Scanner scanner = new Scanner(System.in);
         UserDao userDao = new SQLiteUserDao();
         SiteDao siteDao = new SQLiteSiteDao();
+        ObservationDao observationDao = new SQLiteObservationDao();
 
-        JournalService service = new JournalService(userDao, siteDao);
+        JournalService service = new JournalService(userDao, siteDao, observationDao);
         TextUI ui = new TextUI(service, scanner);
 
         ui.start();
