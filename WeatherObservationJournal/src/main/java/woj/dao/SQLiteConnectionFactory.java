@@ -28,7 +28,7 @@ public class SQLiteConnectionFactory {
             System.out.println("Exception: " + e);
         }
     }
-    
+
     public Connection getConnection() throws SQLException {
         Connection connection = null;
         connection = DriverManager.getConnection(url);

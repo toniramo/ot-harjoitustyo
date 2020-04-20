@@ -8,16 +8,19 @@ package woj.dao;
 import woj.domain.Observation;
 import woj.domain.User;
 import woj.domain.Site;
-import java.util.Set;
+import java.util.List;
 
 /**
  *
  * @author toniramo
  */
 public interface ObservationDao {
-    Observation getObservation();
-    Set<Observation> getAllObservations();
-    boolean createObservation(Site site, User user, Observation observation);
-    boolean updateSite();
-    boolean deleteSite();
+    //Observation getObservation();
+    List<Observation> getAllObservations();
+    List<Observation> getObservationsBySite(Site site);
+    List<Observation> getObservationsByUser(User user);
+    List<Observation> getObservationsBySiteAndUser(Site site, User user);
+    boolean createObservation(Observation observation);
+    boolean updateObservation(Observation observation);
+    boolean deleteObservation(Observation observation);
 }

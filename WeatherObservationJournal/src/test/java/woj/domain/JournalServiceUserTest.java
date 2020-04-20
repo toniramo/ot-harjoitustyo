@@ -9,6 +9,8 @@ import woj.domain.JournalService;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import woj.dao.ObservationDao;
+import woj.dao.SQLiteObservationDao;
 
 
 /**
@@ -19,13 +21,15 @@ public class JournalServiceUserTest {
 
     FakeUserDao userDao;
     FakeSiteDao siteDao;
+    ObservationDao observationDao;
     JournalService service;
 
     @Before
     public void setUp() {
         userDao = new FakeUserDao();
         siteDao = new FakeSiteDao();
-        service = new JournalService(userDao, siteDao);
+        observationDao = new SQLiteObservationDao();
+        service = new JournalService(userDao, siteDao, observationDao);
     }
 
     @Test

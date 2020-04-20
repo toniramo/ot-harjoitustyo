@@ -8,6 +8,7 @@ package woj.domain;
 import woj.dao.SiteDao;
 import woj.dao.UserDao;
 import java.util.*;
+import woj.dao.ObservationDao;
 
 /**
  *
@@ -17,11 +18,13 @@ public class JournalService {
 
     private UserDao userDao;
     private SiteDao siteDao;
+    private ObservationDao observationDao;
     private User loggedIn;
 
-    public JournalService(UserDao userDao, SiteDao siteDao) {
+    public JournalService(UserDao userDao, SiteDao siteDao, ObservationDao observationDao) {
         this.userDao = userDao;
         this.siteDao = siteDao;
+        this.observationDao = observationDao;
     }
 
     public boolean login(String username) {
@@ -58,11 +61,11 @@ public class JournalService {
 
     public boolean createSite(Site site) {
         site.setCreatedBy(loggedIn.getUsername());
-        
+
         if (this.getSitesOfLoggedUser().contains(site)) {
             return false;
         }
-        
+
         try {
             siteDao.createSite(site);
             return true;
@@ -71,12 +74,32 @@ public class JournalService {
             System.out.println("Exception " + e);
 
         }
-        
+
         return false;
     }
 
     public List<Site> getSitesOfLoggedUser() {
         List<Site> sites = siteDao.getSitesByUsername(loggedIn.getUsername());
         return sites;
+    }
+
+    public boolean createObservation(Observation observation) {
+        observation.setCreatedBy(loggedIn);
+
+        try {
+            observationDao.createObservation(observation);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Exception " + e);
+        }
+
+        return false;
+
+    }
+
+    public List<Observation> getObservationsOfChosenSite(Site site) {
+        List<Observation> observations = observationDao.getObservationsBySiteAndUser(site, loggedIn);
+        return observations;
+
     }
 }
