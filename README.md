@@ -12,6 +12,10 @@ Sovellus toteutetaan osana Helsingin yliopiston Ohjelmistotekniikka (kevät 2020
 
 [tyoaikakirjanpito.md](https://github.com/toniramo/ot-harjoitustyo/tree/master/dokumentointi/tyoaikakirjanpito.md)
 
+## Releaset
+
+[Viikko 5](https://github.com/toniramo/ot-harjoitustyo/releases/tag/viikko5)
+
 ## Komentorivitoiminnot
 
 ### Testaus
