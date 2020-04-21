@@ -5,7 +5,6 @@
  */
 package woj.domain;
 
-import woj.domain.Site;
 import woj.dao.SiteDao;
 import java.util.*;
 import java.util.stream.Collectors;

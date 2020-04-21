@@ -15,7 +15,6 @@ import java.util.List;
  * @author toniramo
  */
 public interface ObservationDao {
-    //Observation getObservation();
     List<Observation> getAllObservations();
     List<Observation> getObservationsBySite(Site site);
     List<Observation> getObservationsByUser(User user);

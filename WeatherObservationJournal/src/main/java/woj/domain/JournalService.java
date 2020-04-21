@@ -84,20 +84,20 @@ public class JournalService {
     }
 
     public boolean createObservation(Observation observation) {
-        observation.setCreatedBy(loggedIn);
-
-        try {
-            observationDao.createObservation(observation);
-            return true;
-        } catch (Exception e) {
-            System.out.println("Exception " + e);
+        if (observation.getObservationSite() != null && observation.getTimestamp() != null) {
+            observation.setCreatedBy(loggedIn);
+            try {
+                observationDao.createObservation(observation);
+                return true;
+            } catch (Exception e) {
+                System.out.println("Exception " + e);
+            }
         }
-
         return false;
 
     }
 
-    public List<Observation> getObservationsOfChosenSite(Site site) {
+    public List<Observation> getObservationsOfLoggedUserAndChosenSite(Site site) {
         List<Observation> observations = observationDao.getObservationsBySiteAndUser(site, loggedIn);
         return observations;
 

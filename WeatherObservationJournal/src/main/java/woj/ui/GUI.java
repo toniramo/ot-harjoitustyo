@@ -60,9 +60,10 @@ public class GUI extends Application {
 
     @Override
     public void init() {
-        UserDao userDao = new SQLiteUserDao();
-        SiteDao siteDao = new SQLiteSiteDao();
-        ObservationDao observationDao = new SQLiteObservationDao();
+        String dbUrl = "jdbc:sqlite:woj.db"; //TODO read from file;
+        UserDao userDao = new SQLiteUserDao(dbUrl);
+        SiteDao siteDao = new SQLiteSiteDao(dbUrl);
+        ObservationDao observationDao = new SQLiteObservationDao(dbUrl);
         this.service = new JournalService(userDao, siteDao, observationDao);
     }
 
@@ -331,7 +332,7 @@ public class GUI extends Application {
         TimeSeries s4 = new TimeSeries("Pressure (mbar)");
 
         if (selectedSite != null) {
-            List<Observation> observations = service.getObservationsOfChosenSite(selectedSite);
+            List<Observation> observations = service.getObservationsOfLoggedUserAndChosenSite(selectedSite);
             if (observations != null) {
                 for (Observation o : observations) {
                     Date rawTimestamp = new Date(o.getTimestamp().getTime());

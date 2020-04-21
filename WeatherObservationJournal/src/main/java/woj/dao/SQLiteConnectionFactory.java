@@ -17,11 +17,12 @@ import java.sql.*;
 public class SQLiteConnectionFactory {
 
     String driverClassName = "org.sqlite.JDBC";
-    String url = "jdbc:sqlite:woj.db"; // TODO read from configuration file
+    String url;
 
     private static SQLiteConnectionFactory connectionFactory = null;
 
-    private SQLiteConnectionFactory() {
+    private SQLiteConnectionFactory(String url) {
+        this.url = url;
         try {
             Class.forName(driverClassName);
         } catch (Exception e) {
@@ -30,15 +31,15 @@ public class SQLiteConnectionFactory {
     }
 
     public Connection getConnection() throws SQLException {
-        Connection connection = null;
+        Connection connection;
         connection = DriverManager.getConnection(url);
         return connection;
     }
     
-    public static SQLiteConnectionFactory getInstance() {
+    public static SQLiteConnectionFactory getInstance(String url) {
         
-        if (connectionFactory == null) {
-            connectionFactory = new SQLiteConnectionFactory();
+        if (connectionFactory == null) {  
+            connectionFactory = new SQLiteConnectionFactory(url);
         }
         
         return connectionFactory;

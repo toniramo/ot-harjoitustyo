@@ -18,10 +18,11 @@ public class SQLiteUserDao implements UserDao {
     Connection connection = null;
     PreparedStatement ps = null;
     ResultSet rs;
+    String url;
 
     private Connection getConnection() throws SQLException {
         Connection conn;
-        conn = SQLiteConnectionFactory.getInstance().getConnection();
+        conn = SQLiteConnectionFactory.getInstance(url).getConnection();
         return conn;
     }
 
@@ -38,7 +39,8 @@ public class SQLiteUserDao implements UserDao {
         }
     }
 
-    public SQLiteUserDao() {
+    public SQLiteUserDao(String url) {
+        this.url = url;
         try {
             connection = getConnection();
             ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Users(id INTEGER PRIMARY KEY, username TEXT UNIQUE, name TEXT);");
@@ -73,7 +75,6 @@ public class SQLiteUserDao implements UserDao {
         closeConnection();
 
         return user;
-
     }
 
     @Override
@@ -96,30 +97,6 @@ public class SQLiteUserDao implements UserDao {
 
         return userCreated;
     }
-
-//    public int getUserId(String username) {
-//        User user = null;
-//
-//        try {
-//            connection = getConnection();
-//            ps = connection.prepareStatement("SELECT * FROM Users WHERE username = ?;");
-//            ps.setString(1, username);
-//            rs = ps.executeQuery();
-//
-//            if (rs.next()) {
-//                user = new User();
-//                user.setUsername(rs.getString("username"));
-//                user.setName(rs.getString("name"));
-//            }
-//        } catch (Exception e) {
-//            System.out.println("Exception " + e);
-//        }
-//
-//        closeConnection();
-//
-//        return user;
-//    }
-
 
     @Override
     public User getUser() {

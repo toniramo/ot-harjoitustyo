@@ -24,10 +24,11 @@ public class SQLiteObservationDao implements ObservationDao {
     Connection connection = null;
     PreparedStatement ps = null;
     ResultSet rs;
+    String url;
 
     private Connection getConnection() throws SQLException {
         Connection conn;
-        conn = SQLiteConnectionFactory.getInstance().getConnection();
+        conn = SQLiteConnectionFactory.getInstance(url).getConnection();
         return conn;
     }
 
@@ -44,7 +45,8 @@ public class SQLiteObservationDao implements ObservationDao {
         }
     }
 
-    public SQLiteObservationDao() {
+    public SQLiteObservationDao(String url) {
+        this.url = url;
         try {
             connection = getConnection();
             ps = connection.prepareStatement(""
@@ -137,6 +139,10 @@ public class SQLiteObservationDao implements ObservationDao {
         closeConnection();
         
         return observations;
+    }
+    
+    public Connection getUsedConnection() {
+        return connection;
     }
 
     @Override

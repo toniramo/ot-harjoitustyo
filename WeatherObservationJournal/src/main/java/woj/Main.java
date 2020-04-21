@@ -15,16 +15,6 @@ import javafx.application.Application;
 public class Main {
 
     public static void main(String[] args) {
-        //Scanner scanner = new Scanner(System.in);
-//        UserDao userDao = new SQLiteUserDao();
-//        SiteDao siteDao = new SQLiteSiteDao();
-//        ObservationDao observationDao = new SQLiteObservationDao();
-
-//        JournalService service = new JournalService(userDao, siteDao, observationDao);
-        //TextUI ui = new TextUI(service, scanner);
-        //TextUI (woj.ui.TextUI.java) replaced with Graphical UI (class woj.ui.GUI.java)
-
         Application.launch(GUI.class, args);
-//        Application.launch(TimeSeriesChartFXDemo1.class, args);
     }
 }

@@ -18,10 +18,11 @@ public class SQLiteSiteDao implements SiteDao {
     Connection connection = null;
     PreparedStatement ps = null;
     ResultSet rs;
+    String url;
 
     private Connection getConnection() throws SQLException {
         Connection conn;
-        conn = SQLiteConnectionFactory.getInstance().getConnection();
+        conn = SQLiteConnectionFactory.getInstance(url).getConnection();
         return conn;
     }
 
@@ -38,7 +39,8 @@ public class SQLiteSiteDao implements SiteDao {
         }
     }
 
-    public SQLiteSiteDao() {
+    public SQLiteSiteDao(String url) {
+        this.url = url;
         try {
             connection = getConnection();
             ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Sites(id INTEGER PRIMARY KEY, sitename TEXT UNIQUE, address TEXT, description TEXT, user_id INTEGER REFERENCES Users);");
