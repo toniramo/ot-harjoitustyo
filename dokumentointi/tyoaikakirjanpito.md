@@ -14,4 +14,12 @@
 | 06.04.2020 | 2h     | Graafisen käyttöliittymän laajentaminen (mahdollisuus nähdä käyttäjän kohteet ja luoda uusi kohde käyttöliittymän kautta). |
 | 07.04.2020 | 1.5h     | Testien kattavuuden parantaminen. |
 |            | 1.5h     | Dokumentaation päivittämien.      |
-| Yhteensä   | 36h   | |
+| 11.04.2020 | 2h       | ObservationDaon toteutusta.          |
+|            | 2h       | UIn toteutusta.                    |
+| 18.04.2020 | 1h        | JavaFXn opettelua.                           |
+| 19.04.2020 | 5h        | JavaFXn opettelua ja käyttöliittymän uudelleenkirjoittamista. |
+| 20.04.2020 | 4h       | JavaFXn ja JFree-kirjastojen opettelua, aikasarjojen visualisointi ja liittäminen UIlle sekä havainnon luomisen tuki. |
+|             |1h         | Testikattavuuden kasvattaminen. |
+| 21.04.2020 | 2h       | Testtavuuden parantaminen (tuki ajaa testit testitietokannalla) ja testikattavuuden kasvattaminen. |
+| 21.04.2020 | 1h       | Dokumentoinnin päivitys. |
+| **Yhteensä**   | **54h**   | |
