@@ -52,8 +52,8 @@ public class SQLiteUserDaoTest {
     
    @Test
     public void gettingUserAfterBeingAddedResultsToSameName() {
-        userDao.createUser("testaaja", "Taina Tiistai");
-        assertEquals("Taina Tiistai", userDao.getUserByUsername("testaaja").getName());
+        userDao.createUser("testaaja5", "Taina Tiistai");
+        assertEquals("Taina Tiistai", userDao.getUserByUsername("testaaja5").getName());
     }
     
     @After

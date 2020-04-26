@@ -55,30 +55,4 @@ public class FakeObservationDao implements ObservationDao {
                           && o.getObservationSite().getSitename().equals(site.getSitename()))
                 .collect(Collectors.toList());
     }
-
-    @Override
-    public List<Observation> getAllObservations() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Observation> getObservationsBySite(Site site) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Observation> getObservationsByUser(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean updateObservation(Observation observation) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean deleteObservation(Observation observation) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }
