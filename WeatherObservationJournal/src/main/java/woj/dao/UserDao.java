@@ -9,14 +9,9 @@ import woj.domain.User;
 import java.util.Set;
 
 /**
- *
- * @author toniramo
+ * Interface of data access object for application user related data.
  */
 public interface UserDao {
-    User getUser();
-    Set<User> getAllUsers();
     User getUserByUsername(String username);
     boolean createUser(String username, String name);
-    boolean updateUser();
-    boolean deleteUser();
 }

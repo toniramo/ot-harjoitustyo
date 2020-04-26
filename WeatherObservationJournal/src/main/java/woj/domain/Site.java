@@ -1,15 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package woj.domain;
 
 import java.util.Objects;
 
 /**
- *
- * @author toniramo
+ * Class representing observation site of application user.
+ * Site has a sitename, address, description and user created the site (createdBy).
+ * These can be accessed with getters and setters.
  */
 public class Site {
     private String sitename;

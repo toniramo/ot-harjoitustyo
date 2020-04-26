@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package woj.dao;
 
 import java.sql.Connection;
@@ -16,8 +11,8 @@ import woj.domain.Site;
 import woj.domain.User;
 
 /**
- *
- * @author toniramo
+ * Class to be used as data access object for observations stored in SQLite database.
+ * 
  */
 public class SQLiteObservationDao implements ObservationDao {
 
@@ -44,7 +39,13 @@ public class SQLiteObservationDao implements ObservationDao {
             System.out.println("Exception " + e);
         }
     }
-
+    
+    /**
+     * Create new SQLiteObservationDao with chosen database url.
+     * Either connection is established to the existing SQLite database (if found via url)
+     * or new database is created based on the given url.
+     * @param url url of the database (starting with "jdbc:")
+     */
     public SQLiteObservationDao(String url) {
         this.url = url;
         try {
@@ -67,7 +68,10 @@ public class SQLiteObservationDao implements ObservationDao {
         }
         closeConnection();
     }
-
+    
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public boolean createObservation(Observation observation) {
         boolean observationCreated = false;
@@ -81,6 +85,8 @@ public class SQLiteObservationDao implements ObservationDao {
             rs = ps.executeQuery();
             int userId = rs.getInt("user_id");
             int siteId = rs.getInt("site_id");
+            
+            
 
             ps = connection.prepareStatement("INSERT INTO Observations (timestamp, temperature, rh, rainfall, pressure, description, comment, site_id, user_id) VALUES (?,?,?,?,?,?,?,?,?);");
             ps.setTimestamp(1, observation.getTimestamp());
@@ -105,7 +111,10 @@ public class SQLiteObservationDao implements ObservationDao {
 
         return observationCreated;
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Observation> getObservationsBySiteAndUser(Site site, User user) {
         
@@ -126,8 +135,8 @@ public class SQLiteObservationDao implements ObservationDao {
                 observation.setRh(rs.getDouble("rh"));
                 observation.setRainfall(rs.getDouble("rainfall"));
                 observation.setPressure(rs.getDouble("pressure"));
-                observation.setDescription("description");
-                observation.setComment("comment");
+                observation.setDescription(rs.getString("description"));
+                observation.setComment(rs.getString("comment"));
                 observation.setObservationSite(site);
                 observation.setCreatedBy(user);
                 observations.add(observation);
@@ -139,35 +148,6 @@ public class SQLiteObservationDao implements ObservationDao {
         closeConnection();
         
         return observations;
-    }
-    
-    public Connection getUsedConnection() {
-        return connection;
-    }
-
-    @Override
-    public List<Observation> getAllObservations() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Observation> getObservationsBySite(Site site) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Observation> getObservationsByUser(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean updateObservation(Observation observation) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean deleteObservation(Observation observation) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

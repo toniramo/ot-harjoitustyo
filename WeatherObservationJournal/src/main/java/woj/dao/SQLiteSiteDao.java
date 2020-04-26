@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package woj.dao;
 
 import woj.domain.Site;
@@ -10,8 +5,7 @@ import java.sql.*;
 import java.util.*;
 
 /**
- *
- * @author toniramo
+ * Class to be used as data access object for sites stored in SQLite database.
  */
 public class SQLiteSiteDao implements SiteDao {
 
@@ -39,6 +33,13 @@ public class SQLiteSiteDao implements SiteDao {
         }
     }
 
+    /**
+     * Create new SQLiteSiteDao with chosen database url. Either connection is
+     * established to the existing SQLite database (if found via url) or new
+     * database is created based on the given url.
+     *
+     * @param url url of the database (starting with "jdbc:")
+     */
     public SQLiteSiteDao(String url) {
         this.url = url;
         try {
@@ -51,6 +52,9 @@ public class SQLiteSiteDao implements SiteDao {
         closeConnection();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Site> getSitesByUsername(String username) {
         Site site;
@@ -75,22 +79,25 @@ public class SQLiteSiteDao implements SiteDao {
             System.out.println("Exception " + e);
         }
         closeConnection();
-        
+
         return sites;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean createSite(Site site) {
         boolean siteCreated = false;
 
         try {
             connection = getConnection();
-            
+
             ps = connection.prepareStatement("SELECT id FROM Users WHERE username = ?;");
             ps.setString(1, site.getCreatedBy());
             rs = ps.executeQuery();
             int userId = rs.getInt("id");
-            
+
             ps = connection.prepareStatement("INSERT INTO Sites (sitename, address, description, user_id) VALUES (?,?,?,?);");
             ps.setString(1, site.getSitename());
             ps.setString(2, site.getAddress());
@@ -105,24 +112,6 @@ public class SQLiteSiteDao implements SiteDao {
         }
 
         closeConnection();
-
         return siteCreated;
     }
-
-
-    @Override
-    public boolean updateSite() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean deleteSite() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Site getSite() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }

@@ -1,19 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package woj.domain;
 
 /**
- *
- * @author toniramo
+ * Class representing the application user with individual username and actual name.
+ * These can be accessed with getters and setters.
  */
 
 public class User {
     private String username;
     private String name;
-    //private String password; // not supported yet
 
     public User() {
         
@@ -23,12 +17,6 @@ public class User {
         this.username = username;
         this.name = name;
     }
-    
-//    public User(String username, String name, String password) {
-//        this.username = username;
-//        this.name = name;
-//        this.password = password;
-//    }
     
 
     public String getUsername() {

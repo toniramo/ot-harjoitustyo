@@ -1,17 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package woj.dao;
 
 import woj.domain.User;
 import java.sql.*;
-import java.util.Set;
 
 /**
- *
- * @author toniramo
+ * Class to be used as data access object for user data stored in SQLite
+ * database.
  */
 public class SQLiteUserDao implements UserDao {
 
@@ -39,6 +33,13 @@ public class SQLiteUserDao implements UserDao {
         }
     }
 
+    /**
+     * Create new SQLiteUserDao with chosen database url. Either connection is
+     * established to the existing SQLite database (if found via url) or new
+     * database is created based on the given url.
+     *
+     * @param url url of the database (starting with "jdbc:")
+     */
     public SQLiteUserDao(String url) {
         this.url = url;
         try {
@@ -52,6 +53,9 @@ public class SQLiteUserDao implements UserDao {
         closeConnection();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public User getUserByUsername(String username) {
 
@@ -77,6 +81,9 @@ public class SQLiteUserDao implements UserDao {
         return user;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean createUser(String username, String name) {
         boolean userCreated = false;
@@ -97,25 +104,4 @@ public class SQLiteUserDao implements UserDao {
 
         return userCreated;
     }
-
-    @Override
-    public User getUser() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Set<User> getAllUsers() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean updateUser() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean deleteUser() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }
