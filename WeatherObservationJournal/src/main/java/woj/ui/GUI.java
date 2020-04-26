@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package woj.ui;
 
 import woj.domain.*;
@@ -13,11 +8,15 @@ import java.util.Date;
 import java.util.List;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.geometry.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -36,10 +35,8 @@ import org.jfree.data.time.Minute;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
-
 /**
- *
- * @author toniramo
+ * Graphical user interface for Weather Observation Journal application.
  */
 public class GUI extends Application {
 
@@ -58,22 +55,27 @@ public class GUI extends Application {
 
     private Site selectedSite;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void init() {
-        String dbUrl = "jdbc:sqlite:woj.db"; //TODO read from file;
+        String dbUrl = "jdbc:sqlite:woj.db";
         UserDao userDao = new SQLiteUserDao(dbUrl);
         SiteDao siteDao = new SQLiteSiteDao(dbUrl);
         ObservationDao observationDao = new SQLiteObservationDao(dbUrl);
         this.service = new JournalService(userDao, siteDao, observationDao);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void start(Stage stage) throws Exception {
         window = stage;
 
         createLogInScene();
         createNewUserScene();
-        createNewObservationScene();
         window.setScene(logInScene);
 
         stage.setScene(logInScene);
@@ -240,10 +242,12 @@ public class GUI extends Application {
         });
 
         Label selectedSiteLabel = new Label("Selected site: No site selected.");
+        selectedSiteLabel.setMinWidth(420);
+        selectedSiteLabel.setMaxWidth(420);
         ChartViewer chartViewer = new ChartViewer(createObservationsChart());
+        TableView tableView = new TableView();
 
         Button chooseSiteButton = createButton("Choose site", Color.LIGHTBLUE, true);
-        chooseSiteButton.setOnAction(e -> chooseSite(sitesList, selectedSiteLabel, chartViewer));
 
         Button createSiteButton = createButton("+ Create new site", Color.LIGHTGREEN, true);
         createSiteButton.setOnAction(e -> {
@@ -263,27 +267,91 @@ public class GUI extends Application {
                 PopUpBox.show("Failed to create observation", "Please select site first.");
                 return;
             };
+            createNewObservationScene();
             window.setScene(createObservationScene);
         });
 
-        BorderPane siteSpecificScene = new BorderPane();
-        siteSpecificScene.setTop(selectedSiteLabel);
-        siteSpecificScene.setCenter(chartViewer);
-        siteSpecificScene.setBottom(createObservationButton);
-        setBackgroundFill(siteSpecificScene, new Color(1, 1, 1, 0.5), 10, 0);
-        siteSpecificScene.setPadding(new Insets(20));
+        Button changeViewButton = createButton("Change to table", Color.LIGHTGREY, false);
+
+        HBox siteHeader = new HBox(20);
+        siteHeader.setPadding(new Insets(5, 20, 20, 20));
+        siteHeader.setAlignment(Pos.CENTER);
+        siteHeader.getChildren().addAll(selectedSiteLabel, changeViewButton);
+
+        BorderPane siteSpecificPane = new BorderPane();
+        siteSpecificPane.setTop(siteHeader);
+        siteSpecificPane.setCenter(chartViewer);
+        siteSpecificPane.setBottom(createObservationButton);
+        setBackgroundFill(siteSpecificPane, new Color(1, 1, 1, 0.5), 10, 0);
+        siteSpecificPane.setPadding(new Insets(20));
         BorderPane.setMargin(selectedSiteLabel, new Insets(10));
+        BorderPane.setMargin(tableView, new Insets(10));
         BorderPane.setMargin(chartViewer, new Insets(10));
         BorderPane.setMargin(createObservationButton, new Insets(10));
+
+        changeViewButton.setOnAction(e -> changeView(siteSpecificPane, chartViewer, tableView, changeViewButton));
+        chooseSiteButton.setOnAction(e -> chooseSite(sitesList, selectedSiteLabel, siteSpecificPane));
 
         BorderPane sitesSceneLayout = new BorderPane();
         setBackground(sitesSceneLayout);
         sitesSceneLayout.setLeft(sitesPane);
-        sitesSceneLayout.setCenter(siteSpecificScene);
+        sitesSceneLayout.setCenter(siteSpecificPane);
         BorderPane.setMargin(sitesPane, new Insets(20));
-        BorderPane.setMargin(siteSpecificScene, new Insets(20, 20, 20, 0));
+        BorderPane.setMargin(siteSpecificPane, new Insets(20, 20, 20, 0));
 
         sitesScene = new Scene(sitesSceneLayout);
+    }
+
+    private void changeView(BorderPane pane, ChartViewer chart, TableView table, Button button) {
+        if (pane.getCenter() instanceof ChartViewer) {
+            table = createTable();
+            pane.setCenter(table);
+            button.setText("Change to chart");
+        } else {
+            chart.setChart(createObservationsChart());
+            pane.setCenter(chart);
+            button.setText("Change to table");
+        }
+    }
+
+    private TableView createTable() {
+        TableView<Observation> table = new TableView<>();
+        List<Observation> observations = FXCollections.observableArrayList();
+        if (selectedSite != null) {
+            observations.addAll(service.getObservationsOfLoggedUserAndChosenSite(selectedSite));
+        }
+
+        TableColumn<Observation, Timestamp> timestampCol = new TableColumn<>("Timestamp");
+        timestampCol.setMinWidth(220);
+        timestampCol.setCellValueFactory(new PropertyValueFactory<>("timestamp"));
+
+        TableColumn<Observation, Double> temperatureCol = new TableColumn<>("Temperature (°C)");
+        temperatureCol.setMinWidth(200);
+        temperatureCol.setCellValueFactory(new PropertyValueFactory<>("temperature"));
+
+        TableColumn<Observation, Double> rhCol = new TableColumn<>("Relative humidity (%RH)");
+        rhCol.setMinWidth(200);
+        rhCol.setCellValueFactory(new PropertyValueFactory<>("rh"));
+
+        TableColumn<Observation, Double> rainfallCol = new TableColumn<>("Rainfall (mm)");
+        rainfallCol.setMinWidth(200);
+        rainfallCol.setCellValueFactory(new PropertyValueFactory<>("rainfall"));
+
+        TableColumn<Observation, Double> pressureCol = new TableColumn<>("Pressure (mbar)");
+        pressureCol.setMinWidth(200);
+        pressureCol.setCellValueFactory(new PropertyValueFactory<>("pressure"));
+
+        TableColumn<Observation, String> descriptionCol = new TableColumn<>("Description");
+        descriptionCol.setMinWidth(200);
+        descriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+
+        TableColumn<Observation, String> commentCol = new TableColumn<>("Comment");
+        commentCol.setMinWidth(200);
+        commentCol.setCellValueFactory(new PropertyValueFactory<>("comment"));
+
+        table.getColumns().addAll(timestampCol, temperatureCol, rhCol, rainfallCol, pressureCol, descriptionCol, commentCol);
+        table.getItems().addAll(observations);
+        return table;
     }
 
     private void performMenuAction(ComboBox<String> menu) {
@@ -295,7 +363,7 @@ public class GUI extends Application {
         }
         if (action.equals("About")) {
             PopUpBox.show("About", "Weather Observation Journal\n"
-                    + "Version: Release 1.0\n\n"
+                    + "Version: Release 1.1\n\n"
                     + "Logged in as: "
                     + service.getLoggedUser().getUsername()
                     + " (" + service.getLoggedUser().getName() + ")");
@@ -315,17 +383,25 @@ public class GUI extends Application {
         return siteText;
     }
 
-    private void chooseSite(ListView sitesView, Label label, ChartViewer viewer) {
+    private void chooseSite(ListView sitesView, Label label, BorderPane pane) {
         selectedSite = (Site) sitesView.getSelectionModel().getSelectedItem();
         if (selectedSite != null) {
             label.setText("Selected site: " + selectedSite.getSitename());
-            viewer.setChart(createObservationsChart());
+            updateSitePane(pane);
+        }
+    }
+
+    private void updateSitePane(BorderPane pane) {
+        Object o = pane.getCenter();
+        if (o instanceof ChartViewer) {
+            ((ChartViewer) o).setChart(createObservationsChart());
+        } else {
+            pane.setCenter(createTable());
         }
     }
 
     private JFreeChart createObservationsChart() {
         TimeSeriesCollection dataset = new TimeSeriesCollection();
-        //dataset.setDomainIsPointsInTime(true);
         TimeSeries s1 = new TimeSeries("Temperature (°C)");
         TimeSeries s2 = new TimeSeries("Relative humidity (%RH)");
         TimeSeries s3 = new TimeSeries("Rainfall (mm)");
@@ -342,6 +418,7 @@ public class GUI extends Application {
                     s4.addOrUpdate(new Minute(rawTimestamp), o.getPressure());
                 }
             }
+
         }
 
         dataset.addSeries(s1);
@@ -352,26 +429,29 @@ public class GUI extends Application {
         JFreeChart chart = ChartFactory.createTimeSeriesChart("Observations", "Date", "Value", dataset, true, true, true);
         chart.setBackgroundPaint(new java.awt.Color(0, 0, 0, 0));
         chart.getLegend().setBackgroundPaint(new java.awt.Color(0, 0, 0, 0));
-        XYPlot plot = (XYPlot) chart.getPlot();
+        XYPlot plot = (XYPlot) chart.getXYPlot();
         plot.setDomainPannable(true);
         plot.setRangePannable(true);
         plot.setDomainCrosshairVisible(true);
         plot.setRangeCrosshairVisible(true);
         plot.getDomainAxis().setLowerMargin(0.0);
-        plot.setBackgroundAlpha(0);
+
+        plot.setBackgroundPaint(new java.awt.Color(255, 255, 255, 140));
+        plot.setDomainGridlinePaint(new java.awt.Color(0, 0, 0, 50));
+        plot.setRangeGridlinePaint(new java.awt.Color(0, 0, 0, 35));
         chart.getLegend().setFrame(BlockBorder.NONE);
         chart.getLegend().setHorizontalAlignment(HorizontalAlignment.CENTER);
-        XYLineAndShapeRenderer renderer =
-        (XYLineAndShapeRenderer) plot.getRenderer();
+        XYLineAndShapeRenderer renderer
+                = (XYLineAndShapeRenderer) plot.getRenderer();
         renderer.setSeriesShapesVisible(0, true);
         renderer.setSeriesShapesVisible(1, true);
         renderer.setSeriesShapesVisible(2, true);
         renderer.setSeriesShapesVisible(3, true);
-        
+
         return chart;
     }
 
-private void createNewSiteScene() {
+    private void createNewSiteScene() {
         Label header = createWojHeader();
 
         Region region1 = new Region();
@@ -392,9 +472,11 @@ private void createNewSiteScene() {
 
         Button createSiteButton = createButton("+ Create new site", Color.LIGHTGREEN, true);
         createSiteButton.setOnAction(e -> {
-            createSite(sitenameField, addressField, descriptionField);
-            createSitesScene();
-            window.setScene(sitesScene);
+            boolean siteCreated = createSite(sitenameField, addressField, descriptionField);
+            if (siteCreated) {
+                createSitesScene();
+                window.setScene(sitesScene);
+            }
         });
 
         Button cancelButton = createButton("Cancel", Color.LIGHTCORAL, true);
@@ -425,7 +507,7 @@ private void createNewSiteScene() {
         createSiteLayout.requestFocus();
     }
 
-    private void createSite(TextField sitenameField, TextField addressField, TextField descriptionField) {
+    private boolean createSite(TextField sitenameField, TextField addressField, TextField descriptionField) {
         String sitename = sitenameField.getText();
         String address = addressField.getText();
         String description = descriptionField.getText();
@@ -436,7 +518,7 @@ private void createNewSiteScene() {
 
         if (sitename.length() < 1 || address.length() < 3) {
             PopUpBox.show("Creating new site failed", "Please ensure that you have entered sitename and address\n(at least 1 and 3 characters long, respectively).");
-            return;
+            return false;
         }
 
         Site site = new Site();
@@ -446,36 +528,59 @@ private void createNewSiteScene() {
 
         if (service.createSite(site)) {
             PopUpBox.show("Created new site successfully", "Site " + sitename + ", " + address + " (" + description + ") created.");
-            return;
+            return true;
         }
         PopUpBox.show("Creating new site failed", "Site " + sitename + " could not be created. Please ensure used sitename is unique.");
+        return false;
     }
 
     private void createNewObservationScene() {
         Label header = createWojHeader();
 
         Region region1 = new Region();
-        region1.setMinHeight(5);
+        region1.setMinHeight(3);
         Region region2 = new Region();
-        region2.setMinHeight(25);
+        region2.setMinHeight(15);
 
-        Label createNewObservationLabel = new Label("Create new Observation");
+        Label createNewObservationLabel = new Label("Create new observation for site\n" + selectedSite.getSitename());
 
         DatePicker datepicker = new DatePicker();
         datepicker.setPromptText("Select date (if not today)");
         datepicker.setMaxWidth(Double.MAX_VALUE);
-        
+
+        int fieldWidth = 270;
+
         TextField temperatureField = new TextField();
         temperatureField.setPromptText("Enter temperature (-60...+60 °C)");
+        temperatureField.setMinWidth(fieldWidth);
+        Label temperatureUnit = new Label("°C");
+        HBox temperatureBox = new HBox(10);
+        temperatureBox.getChildren().addAll(temperatureField, temperatureUnit);
+        temperatureBox.setAlignment(Pos.CENTER_LEFT);
 
         TextField rhField = new TextField();
         rhField.setPromptText("Enter relative humidity (0...100 %RH)");
+        rhField.setMinWidth(fieldWidth);
+        Label rhUnit = new Label("%RH");
+        HBox rhBox = new HBox(10);
+        rhBox.getChildren().addAll(rhField, rhUnit);
+        rhBox.setAlignment(Pos.CENTER_LEFT);
 
         TextField rainfallField = new TextField();
         rainfallField.setPromptText("Enter rainfall (>= 0 mm)");
+        rainfallField.setMinWidth(fieldWidth);
+        Label rainfallUnit = new Label("mm");
+        HBox rainfallBox = new HBox(10);
+        rainfallBox.getChildren().addAll(rainfallField, rainfallUnit);
+        rainfallBox.setAlignment(Pos.CENTER_LEFT);
 
         TextField pressureField = new TextField();
         pressureField.setPromptText("Enter pressure (> 0 mbar)");
+        pressureField.setMinWidth(fieldWidth);
+        Label pressureUnit = new Label("mbar");
+        HBox pressureBox = new HBox(10);
+        pressureBox.getChildren().addAll(pressureField, pressureUnit);
+        pressureBox.setAlignment(Pos.CENTER_LEFT);
 
         ComboBox<String> descriptionMenu = new ComboBox<>();
         descriptionMenu.setPromptText("Choose description");
@@ -496,8 +601,9 @@ private void createNewSiteScene() {
             rhField.clear();
             rainfallField.clear();
             commentField.clear();
-            createSitesScene();
             datepicker.getEditor().clear();
+            Pane sitesPane = (Pane) sitesScene.getRoot();
+            updateSitePane((BorderPane) sitesPane.getChildren().get(1));
             window.setScene(sitesScene);
         });
 
@@ -506,7 +612,7 @@ private void createNewSiteScene() {
         setBackgroundFill(centerLayout, new Color(1, 1, 1, 0.5), 10, -20);
         centerLayout.getChildren().addAll(
                 header, region1, createNewObservationLabel, datepicker,
-                temperatureField, rhField, rainfallField, pressureField,
+                temperatureBox, rhBox, rainfallBox, pressureBox,
                 descriptionMenu, commentField, createObservationButton, region2, backButton);
 
         BorderPane createObservationLayout = new BorderPane();
@@ -521,57 +627,135 @@ private void createNewSiteScene() {
     }
 
     private void createObservation(DatePicker datepicker, TextField temperatureField, TextField rhField, TextField rainfallField, TextField pressureField, ComboBox descriptionMenu, TextField commentField) {
+        String errorMessage = "Please ensure that the inputs of the following fields are correct:";
+        Boolean error = false;
+        Double temperature;
+        Double rh;
+        Double rainfall;
+        Double pressure;
+        String description = "";
+        String comment;
+        String style = temperatureField.getStyle();
+        String descriptionStyle = descriptionMenu.getStyle();
 
         try {
-            Double temperature = Double.parseDouble(temperatureField.getText());
-            Double rh = Double.parseDouble(rhField.getText());
-            Double rainfall = Double.parseDouble(rainfallField.getText());
-            Double pressure = Double.parseDouble(pressureField.getText());
-            String description = descriptionMenu.getValue().toString();
-            String comment = commentField.getText();
-
-            if (temperature < -60 || temperature > 60 || rh < 0 || rh > 100 || rainfall < 0 || pressure < 0 || description.isBlank()) {
-                PopUpBox.show("Failed to create new observation", "Please ensure that you are entering valid input for necessary fields.");
-                temperatureField.clear();
-                rhField.clear();
-                rainfallField.clear();
-                pressureField.clear();
-                descriptionMenu.getSelectionModel().clearSelection();
-                commentField.clear();
-                return;
-            }
-
-            Timestamp timestamp;
-
-            LocalDate date = datepicker.getValue();
-            if (date != null) {
-                timestamp = Timestamp.valueOf(date.atTime(LocalTime.MIDNIGHT));
-            } else {
-                timestamp = new Timestamp(System.currentTimeMillis());
-            }
-
-            Observation observation = new Observation();
-            observation.setTimestamp(timestamp);
-            observation.setTemperature(temperature);
-            observation.setRh(rh);
-            observation.setRainfall(rainfall);
-            observation.setPressure(pressure);
-            observation.setDescription(description);
-            observation.setComment(comment);
-            observation.setObservationSite(selectedSite);
-
-            service.createObservation(observation);
-            PopUpBox.show("New observation created succesfully", "Observation for " + selectedSite.getSitename() + " on " + timestamp.toString() + " created." );
-
-        } catch (Exception e) {
-            PopUpBox.show("Failed to create new observation", "Please check the format of your input.");
+            temperature = Double.parseDouble(temperatureField.getText());
+        } catch (NumberFormatException e) {
+            temperature = null;
         }
-        
+        if (temperature == null || temperature < -60 || temperature > 60) {
+            errorMessage += "\n- Temperature should be a decimal number between -60 and 60 °C";
+            temperatureField.setStyle("-fx-background-color:SALMON");
+            temperatureField.clear();
+            error = true;
+        }
+
+        try {
+            rh = Double.parseDouble(rhField.getText());
+        } catch (NumberFormatException e) {
+            rh = null;
+        }
+        if (rh == null || rh < 0 || rh > 100) {
+            errorMessage += "\n- Relative humidity (RH) should be a decimal number between 0 and 100 %RH";
+            rhField.setStyle("-fx-background-color:SALMON");
+            rhField.clear();
+            error = true;
+        }
+
+        try {
+            rainfall = Double.parseDouble(rainfallField.getText());
+        } catch (NumberFormatException e) {
+            rainfall = null;
+        }
+        if (rainfall == null || rainfall < 0) {
+            errorMessage += "\n- Rainfall should be a decimal number equal or greater than 0 mm";
+            rainfallField.setStyle("-fx-background-color:SALMON");
+            rainfallField.clear();
+            error = true;
+        }
+
+        try {
+            pressure = Double.parseDouble(pressureField.getText());
+        } catch (NumberFormatException e) {
+            pressure = null;
+        }
+        if (pressure == null || pressure < 0) {
+            errorMessage += "\n- Pressure should be a decimal number equal or greater than 0 mbar";
+            pressureField.setStyle("-fx-background-color:SALMON");
+            pressureField.clear();
+            error = true;
+        }
+
+        if (descriptionMenu.getValue() == null) {
+            errorMessage += "\n- Weather description should be chosen from the available options";
+            descriptionMenu.setStyle("-fx-background-color:SALMON");
+            error = true;
+        } else {
+            description = descriptionMenu.getValue().toString();
+        }
+        comment = commentField.getText();
+
+        if (error) {
+            PopUpBox.show("Failed to create new observation", errorMessage);
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            temperatureField.setStyle(style);
+            rhField.setStyle(style);
+            rainfallField.setStyle(style);
+            pressureField.setStyle(style);
+            descriptionMenu.setStyle(descriptionStyle);
+            return;
+        }
+
+//        try {
+//            String description = descriptionMenu.getValue().toString();
+//            String comment = commentField.getText();
+//            if (temperature < -60 || temperature > 60) {
+//                temperatureField.clear();
+//            }
+//
+//            if (rh < 0 || rh > 100 || rainfall < 0 || pressure < 0 || description.isBlank()) {
+//                PopUpBox.show("Failed to create new observation", "Please ensure that you are entering valid input for necessary fields.");
+//                temperatureField.clear();
+//                rhField.clear();
+//                rainfallField.clear();
+//                pressureField.clear();
+//                descriptionMenu.getSelectionModel().clearSelection();
+//                commentField.clear();
+//                return;
+//            }
+        Timestamp timestamp;
+
+        LocalDate date = datepicker.getValue();
+        if (date != null) {
+            timestamp = Timestamp.valueOf(date.atTime(LocalTime.MIDNIGHT));
+
+        } else {
+            timestamp = Timestamp.valueOf(LocalDate.now().atTime(LocalTime.MIDNIGHT));
+        }
+
+        Observation observation = new Observation();
+        observation.setTimestamp(timestamp);
+        observation.setTemperature(temperature);
+        observation.setRh(rh);
+        observation.setRainfall(rainfall);
+        observation.setPressure(pressure);
+        observation.setDescription(description);
+        observation.setComment(comment);
+        observation.setObservationSite(selectedSite);
+
+        service.createObservation(observation);
+        PopUpBox.show("New observation created succesfully", "Observation for " + selectedSite.getSitename() + " on " + timestamp.toString() + " created.");
+
         temperatureField.clear();
         rhField.clear();
         rainfallField.clear();
         pressureField.clear();
         descriptionMenu.getSelectionModel().clearSelection();
+
         commentField.clear();
     }
 
@@ -598,11 +782,13 @@ private void createNewSiteScene() {
 
         BackgroundFill buttonFill = new BackgroundFill(color, new CornerRadii(10), Insets.EMPTY);
         BackgroundFill buttonPressedFill = new BackgroundFill(color.darker(), new CornerRadii(10), Insets.EMPTY);
+        BackgroundFill mouseOverFill = new BackgroundFill(color.brighter(), new CornerRadii(10), Insets.EMPTY);
 
         button.setBackground(new Background(buttonFill));
         button.setOnMousePressed(e -> button.setBackground(new Background(buttonPressedFill)));
         button.setOnMouseReleased(e -> button.setBackground(new Background(buttonFill)));
-
+        button.setOnMouseEntered(e -> button.setBackground(new Background(mouseOverFill)));
+        button.setOnMouseExited(e -> button.setBackground(new Background(buttonFill)));
         return button;
     }
 
