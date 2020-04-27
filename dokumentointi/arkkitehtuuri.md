@@ -18,7 +18,7 @@ joiden lisäksi käyttöliittymä tarjoaa popup-ikkunoita käyttäjän tiedottam
 
 ## Sovelluslogiikka
 
-Sovelluksen logiikka rakentuu kolmen luokan ympärille: User, Site ja Observation, jotka yhdessä muodostavat ohjelman datamallin. Luokat kuvaavat käyttäjiä (User), käyttäjien havaintokohteita (Site) sekä käyttäjien havaintokohteissa tekemiin havaintoihin (Observation). 
+Sovelluksen logiikka rakentuu kolmen luokan ympärille: User, Site ja Observation, jotka yhdessä muodostavat ohjelman datamallin. Luokat kuvaavat käyttäjiä (User), käyttäjien havaintokohteita (Site) sekä käyttäjien havaintokohteissa tekemiä havaintoja (Observation). 
 
 ![datamalli](./arkkitehtuuri/wojDataModelDiagram.png)
 
@@ -39,13 +39,13 @@ JournalService-olioon liitetään woj.dao-pakkauksen luokkien UserDao-, SiteDao-
 
 ## Tietojen pysyväistallennus
 
-Tietojen pysyväistallennuksesta vastaa pakkaus woj.dao ja tämän luokat SQLiteUserDao, SQLiteSiteDao sekä SQLiteObservationDao. Tieto tallennetaan toteutuksessa luokkien nimen mukaisesti SQLite-tietokantaan. Kukin luokka toteuttaa nimeä vastaavan rajapinnan (SQLiteUserDao rajapinnan UserDao, SQLiteSiteDao rajapinnan SiteDao ja SQLiteObservationDao rajapinnan ObservationDao) Data Access Object-suunnittelumallin mukaisesti. Muulla sovelluslogiikalla ei ole pääsyä suoraan rajapintoja toteuttaviin luokkiin, vaan vuorovaikutus tapahtuu rajapintojen kautta. Näin tallennuksesta vastaavat luokkia voidaan tarvittaessa muuttaa rikkomatta yhteensopivuutta muun sovelluslogiikan kanssa.
+Tietojen pysyväistallennuksesta vastaa pakkaus woj.dao ja tämän luokat SQLiteUserDao, SQLiteSiteDao sekä SQLiteObservationDao. Tieto tallennetaan toteutuksessa luokkien nimen mukaisesti SQLite-tietokantaan. Kukin luokka toteuttaa nimeä vastaavan rajapinnan (SQLiteUserDao rajapinnan UserDao, SQLiteSiteDao rajapinnan SiteDao ja SQLiteObservationDao rajapinnan ObservationDao) Data Access Object-suunnittelumallin mukaisesti. Muulla sovelluslogiikalla ei ole pääsyä suoraan rajapintoja toteuttaviin luokkiin, vaan vuorovaikutus tapahtuu rajapintojen kautta. Näin tallennuksesta vastaavia luokkia voidaan tarvittaessa muuttaa rikkomatta yhteensopivuutta muun sovelluslogiikan kanssa.
 
-Suunnittelumallia noudattelemalla on mahdollistettu myös sovelluslogiikan testaaminen eristettynä varsinaisista tallennustavoista.
+Suunnittelumallia noudattelemalla on mahdollistettu myös sovelluslogiikan testaaminen eristettynä varsinaisista tallennustavoista niin sanottujen vale-dao-luokkien avulla.
 
 ### Tietokanta
 
-Sovellus tallentaa käyttäjien, kohteiden ja havaintojen tiedot samaan SQLite-tietokantaan kunkin omille tauluilleen.
+Sovellus tallentaa käyttäjien, kohteiden ja havaintojen tiedot samaan SQLite-tietokantaan kunkin kyseessä olevan luokan omille tauluilleen.
 
 Tietokannan skeema on seuraava:
 

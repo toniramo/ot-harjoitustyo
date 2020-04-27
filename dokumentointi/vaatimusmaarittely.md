@@ -30,7 +30,7 @@ Sovelluksen perustoiminnallisuuden kannalta olennaista on, että siitä löytyy 
   - :heavy_check_mark:<sup>2</sup> kommentti voi olla tyhjä tai rajoitettu esimerkiksi 100 merkkiin  
 - :heavy_check_mark: käyttäjä voi kirjautua ulos
 
-<sup>0) Tämä on toteutettu vaihtoehtoisella taulukkonäkymällä. Tarjolla olevat säänkuvaukset voivat hieman poiketa esimerkkinä annetuista. Min ja max - lämpötiloja ei ole tällä hetkellä saatavilla.
+<sup>0) Tämä on toteutettu vaihtoehtoisella taulukkonäkymällä. Tarjolla olevat säänkuvaukset voivat hieman poiketa esimerkkinä annetuista. Min ja max - lämpötiloja ei ole tällä hetkellä saatavilla.</sup>
 <sup>1) Sovellus ei tällä hetkellä validoi löytyykö tietylle tietyllä ajanhetkellä jo mittausta, vaan sovellus näyttää vain toisen mahdollisista duplikaatti-merkinnöistä; </sup>
 <sup>2) 100 merkin rajoitusta ei toistaiseksi ole</sup>
 
