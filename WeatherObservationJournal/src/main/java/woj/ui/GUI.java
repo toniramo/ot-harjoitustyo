@@ -710,23 +710,6 @@ public class GUI extends Application {
             return;
         }
 
-//        try {
-//            String description = descriptionMenu.getValue().toString();
-//            String comment = commentField.getText();
-//            if (temperature < -60 || temperature > 60) {
-//                temperatureField.clear();
-//            }
-//
-//            if (rh < 0 || rh > 100 || rainfall < 0 || pressure < 0 || description.isBlank()) {
-//                PopUpBox.show("Failed to create new observation", "Please ensure that you are entering valid input for necessary fields.");
-//                temperatureField.clear();
-//                rhField.clear();
-//                rainfallField.clear();
-//                pressureField.clear();
-//                descriptionMenu.getSelectionModel().clearSelection();
-//                commentField.clear();
-//                return;
-//            }
         Timestamp timestamp;
 
         LocalDate date = datepicker.getValue();
