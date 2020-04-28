@@ -17,6 +17,7 @@ Sovellus toteutetaan osana Helsingin yliopiston Ohjelmistotekniikka (kevät 2020
 ## Releaset
 
 [Viikko 5](https://github.com/toniramo/ot-harjoitustyo/releases/tag/viikko5)
+
 [Viikko 6](https://github.com/toniramo/ot-harjoitustyo/releases/tag/viikko6)
 
 ## Komentorivitoiminnot
