@@ -22,4 +22,9 @@
 |             |1h         | Testikattavuuden kasvattaminen. |
 | 21.04.2020 | 2h       | Testtavuuden parantaminen (tuki ajaa testit testitietokannalla) ja testikattavuuden kasvattaminen. |
 | 21.04.2020 | 1h       | Dokumentoinnin päivitys. |
-| **Yhteensä**   | **54h**   | |
+| 24.04.2020 | 3h       | JavaFX TableView-elementtiin tutustuminen ja vaihtoehtoisen taulukkonäkymän toteutus käyttöliittymään. |
+| 26.04.2020 | 3h       | Käyttöliittymän validoinnin parantaminen ja syöttekenttien käytön helpottaminen havaintoja lisätessä. Jo valitun kohteen muistaminen havainnonlisäys-näkymästä palatessa. |
+|            | 1.5h       | Testikattavuuden parantaminen. |
+| 27.04.2020 | 3h       | Dokumentaatiota: JavaDocin luominen. Käyttöohjeiden ja alustavan arkkitehtuurikuvauksen toteutus. |
+| 28.04.2020 | 0.5      | Dokumentaation päivitys. |
+| **Yhteensä**   | **65h**   | |

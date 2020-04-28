@@ -12,9 +12,12 @@ Sovellus toteutetaan osana Helsingin yliopiston Ohjelmistotekniikka (kevät 2020
 
 [tyoaikakirjanpito.md](https://github.com/toniramo/ot-harjoitustyo/tree/master/dokumentointi/tyoaikakirjanpito.md)
 
+[kayttoohje.md](https://github.com/toniramo/ot-harjoitustyo/tree/master/dokumentointi/kayttoohje.md)
+
 ## Releaset
 
 [Viikko 5](https://github.com/toniramo/ot-harjoitustyo/releases/tag/viikko5)
+[Viikko 6](https://github.com/toniramo/ot-harjoitustyo/releases/tag/viikko6)
 
 ## Komentorivitoiminnot
 
@@ -48,6 +51,16 @@ mvn package
 ```
 
 generoituu hakemistoon `target` suoritettava jar-tiedosto *WeatherObservationJournal-1.0-SNAPSHOT.jar*
+
+### JavaDoc
+
+JavaDoc on mahdollista generoida komennolla
+
+```
+mvn javadoc:javadoc
+```
+
+Generoitua JavaDocia on mahdollista tarkastella selaimella sijaintiin *target/site/apidocs/* luoduilla tiedostoilla (index.html).
 
 ### Checkstyle
 Tiedoston [checkstyle.xml](./WeatherObservationJournal/.checkstyle.xml) määrittelemät tarkastukset suoritetaan komennolla
