@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package woj.dao;
 
 import java.io.File;
@@ -13,18 +8,13 @@ import static org.junit.Assert.*;
 import woj.domain.Site;
 
 /**
- *
- * @author toniramo
+ * Test class to test SQLiteSiteDao class
  */
 public class SQLiteSiteDaoTest {
 
     SiteDao siteDao;
     UserDao userDao;
     String testUrl = "jdbc:sqlite:wojTest.db";
-
-    public SQLiteSiteDaoTest() {
-
-    }
 
     @Before
     public void setUp() {
@@ -88,7 +78,7 @@ public class SQLiteSiteDaoTest {
             File db = new File("wojTest.db");
             db.delete();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Exception: " + e);
         }
     }
 }

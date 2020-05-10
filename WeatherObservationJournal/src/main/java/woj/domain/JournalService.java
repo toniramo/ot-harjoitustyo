@@ -10,9 +10,9 @@ import woj.dao.ObservationDao;
  */
 public class JournalService {
 
-    private UserDao userDao;
-    private SiteDao siteDao;
-    private ObservationDao observationDao;
+    private final UserDao userDao;
+    private final SiteDao siteDao;
+    private final ObservationDao observationDao;
     private User loggedIn;
 
     /**

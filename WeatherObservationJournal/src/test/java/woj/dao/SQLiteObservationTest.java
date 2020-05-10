@@ -1,16 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package woj.dao;
 
 import java.io.File;
 import java.sql.Timestamp;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import woj.domain.Observation;
@@ -18,8 +11,7 @@ import woj.domain.Site;
 import woj.domain.User;
 
 /**
- *
- * @author toniramo
+ * Test class to test SQLiteObservationDao class
  */
 public class SQLiteObservationTest {
 
@@ -31,17 +23,6 @@ public class SQLiteObservationTest {
     User user;
     Site site;
     Observation o;
-
-    public SQLiteObservationTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
 
     @Before
     public void setUp() {
@@ -114,7 +95,7 @@ public class SQLiteObservationTest {
             File db = new File("wojTest.db");
             db.delete();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Exception: " + e);
         }
     }
 }

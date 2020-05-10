@@ -22,31 +22,6 @@ public class Site {
         this.address = address;
         this.description = description;
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Site other = (Site) obj;
-        if (!Objects.equals(this.sitename, other.sitename)) {
-            return false;
-        }
-
-        return true;
-    }
     
     public String getSitename() {
         return sitename;
@@ -85,5 +60,23 @@ public class Site {
         return "Sitename: " + sitename + ", address: " + address + ", description: " + description + ", user: " + createdBy;
     }
     
-    
+    /**
+     * Compare if two object are equal Site objects (i.e. they have same sitename)
+     * @param obj object to be compared with
+     * @return true if object are same, false otherwise
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Site other = (Site) obj;
+        return Objects.equals(this.sitename, other.sitename);
+    }
 }

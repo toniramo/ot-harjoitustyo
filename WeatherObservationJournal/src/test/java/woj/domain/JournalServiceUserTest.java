@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package woj.domain;
 
 import org.junit.Before;
@@ -11,8 +6,7 @@ import static org.junit.Assert.*;
 
 
 /**
- *
- * @author toniramo
+ * Test class to test User related methods of JournalService
  */
 public class JournalServiceUserTest {
 

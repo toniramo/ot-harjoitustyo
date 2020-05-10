@@ -1,5 +1,7 @@
 package woj.domain;
 
+import java.util.Objects;
+
 /**
  * Class representing the application user with individual username and actual name.
  * These can be accessed with getters and setters.
@@ -35,6 +37,25 @@ public class User {
         this.name = name;
     }
     
+    /**
+     * Compare if two objects are equal User objects (i.e. they have same username)
+     * @param obj object to be compared with
+     * @return true if object are same, false otherwise
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final User other = (User) obj;
+        return Objects.equals(this.username, other.username);
+    }
 }
 
 

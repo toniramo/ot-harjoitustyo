@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package woj.domain;
 
 import woj.dao.SiteDao;
@@ -10,8 +5,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- *
- * @author toniramo
+ * Class that enables testing JournalService in isolation from actual SiteDao class
  */
 public class FakeSiteDao implements SiteDao {
     List<Site> sites = new ArrayList<>();
