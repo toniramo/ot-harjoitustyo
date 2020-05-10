@@ -55,7 +55,7 @@ Ohjelman automatisoitujen testien kattavuus on käyttöliittymäkerros poislukie
 
 ![testikattavuus](./testaus/testCoverage.png)
 
-Testikattavuudesta erityisesti haaraumakattavuutta alentaa erilaisten tiedostojen pysyväistallennukseen lyyttyvien virhe- / poikkeustilanteet huomiotta jättäminen testauksen osalta.
+Testikattavuudesta erityisesti haaraumakattavuutta alentaa erilaisten tiedostojen pysyväistallennukseen liittyvien virhe- / poikkeustilanteet huomiotta jättäminen testauksen osalta.
 
 ## Järjestelmätestaus
 
@@ -84,5 +84,5 @@ Sovelluksen [käyttöohjeessa](./kayttoohje.md) ja [määrittelydokumentissa](va
 ## Sovelluksen laadulliset puutteet
 
 Sovelluksen kehityksessä ja testauksessa ei ole otettu huomioon tilannetta, joissa 
-- joko käyttäjänmäärittelemään tai sovelluksen oletustietokantaan ei ole luku- ja/tai kirjoitusoikeutta
+- joko käyttäjän määrittelemään tai sovelluksen oletustietokantaan ei ole luku- ja/tai kirjoitusoikeutta
 - sovelluksen lukema tietokanta on ollut jo olemassa, mutta sen skeema ei ole sovelluksen olettama

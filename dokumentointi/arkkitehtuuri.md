@@ -133,7 +133,7 @@ Sovelluksen DAO-luokissa on muutamia pitkiä metodeita tiedonlukua varten, joide
 
 ### Käyttöliittymä
 
-Käyttöliittymä on rakennettu kokonaan PopUpBox-luokka poislukien kokonaan GUI-luokan sisälle. Ohjelman ylläpidettävyyden kannalta olisi järkevämpi eriyttää käyttöliittymän toiminnot omikse luokikseen. Tällä voisi myös mahdollisesti vähentää käyttöliittymässä esiintyvää toisteista koodia.
+Käyttöliittymä on rakennettu PopUpBox-luokka poislukien kokonaan GUI-luokan sisälle. Ohjelman ylläpidettävyyden kannalta olisi järkevämpi eriyttää käyttöliittymän toiminnot omikse luokikseen. Tällä voisi myös mahdollisesti vähentää käyttöliittymässä esiintyvää toisteista koodia.
 
 Vaihdettaessa näkymää toiseen olisi järkevämpää toteuttaa näkymien päivittäminen omalla metodilla tai muita JavaFXn toimintoja hyödyntämällä piirtämättä jokaisessa tilanteessa näkymää kokonaan uudelleen. Näin tapahtuu esimerkiksi palattaessa uuden havaintokohteen luomiseen tarkoitetusta näkymästä takaisin käyttäjän päänäkymään (kts. [GUI.java, rivi 506](https://github.com/toniramo/ot-harjoitustyo/blob/master/WeatherObservationJournal/src/main/java/woj/ui/GUI.java#L506)).
 

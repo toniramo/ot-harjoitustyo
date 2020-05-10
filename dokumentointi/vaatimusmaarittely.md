@@ -10,7 +10,8 @@ Sovelluksen perustoiminnallisuuden kannalta olennaista on, että siitä löytyy 
 
 ### Ennen kirjautumista
 - käyttäjä voi luoda käyttäjätunnuksen sovellusta varten
-  - Tunnuksen on oltava uniikki ja sisältää vähintään yhden merkin
+  - tunnuksen on oltava uniikki ja sisältää vähintään yhden merkin
+  - käyttäjällä on oltava varsinainen nimi, joskin riittää että kenttä ei ole tyhjä
 - käyttäjä voi kirjautua järjestelmään jo olemassa olevalla tunnuksella
   - salasanan käyttöä ei vaadita perustoiminnallisuuden näkökulmasta eikä tukea sille ole toistaiseksi toteutettu
 
@@ -26,7 +27,7 @@ Sovelluksen perustoiminnallisuuden kannalta olennaista on, että siitä löytyy 
   - käyttäjä voi vaihtaa näkymää halutessaan
   - kohteiden päiväkohtaiset tiedot sisältävät päivämäärän, lämpötilan, ilmankosteuden, sademäärän, sään kuvauksen: aurinkoista (Sunny), pilvistä (Cloudy), sateista (Rainy), myrskyisää (Stormy) sekä vapaamuotoisen kommentin.
 - käyttäjä voi valita havaintokohteen ja valittuaan lisätä uuden säähavainnon kohteelle
-  - käyttäjä voi vaihtaa päivämäärää, jos se on joku muu kuin kyseinen päiväkohtaiset
+  - käyttäjä voi vaihtaa päivämäärää, jos se on joku muu kuin kyseinen päivä
   - käyttäjän tulee syöttää validi lämpötila välillä -60 ja +60 astetta
   - käyttäjän tulee syöttää validi ilmankosteus välillä 0 ja 100%RH
   - käyttäjän tulee syöttää validi sademäärä (suurempi tai yhtäsuuri kuin 0 mm)
