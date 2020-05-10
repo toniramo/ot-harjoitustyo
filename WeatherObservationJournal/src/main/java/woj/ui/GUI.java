@@ -1,17 +1,22 @@
 package woj.ui;
 
+import java.io.FileInputStream;
 import woj.domain.*;
 import woj.dao.*;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javafx.application.Application;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.geometry.*;
 import javafx.scene.Scene;
@@ -55,12 +60,25 @@ public class GUI extends Application {
 
     private Site selectedSite;
 
+    private boolean propertiesOK;
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void init() {
+        Properties properties = new Properties();
         String dbUrl = "jdbc:sqlite:woj.db";
+        try {
+            properties.load(new FileInputStream("config.properties"));
+            if (!properties.getProperty("database").equals("wojTest.db") && !properties.getProperty("database").isBlank()) {
+                propertiesOK = true;
+                dbUrl = "jdbc:sqlite:" + properties.getProperty("database");
+            }
+        } catch (Exception e) {
+            propertiesOK = false;
+        }
+
         UserDao userDao = new SQLiteUserDao(dbUrl);
         SiteDao siteDao = new SQLiteSiteDao(dbUrl);
         ObservationDao observationDao = new SQLiteObservationDao(dbUrl);
@@ -72,6 +90,9 @@ public class GUI extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
+        if (!propertiesOK) {
+            PopUpBox.show("Error in configuration", "Problem with config.properties detected. Default configuration will be used.");
+        }
         window = stage;
 
         createLogInScene();
@@ -189,10 +210,9 @@ public class GUI extends Application {
     private void createUser(TextField usernameField, TextField nameField) {
         String username = usernameField.getText();
         String name = nameField.getText();
-        usernameField.clear();
-        nameField.clear();
 
         if (username.length() < 2) {
+            usernameField.clear();
             PopUpBox.show("Failed to create user", "Please enter username that is at least 2 characters long.");
             return;
         }
@@ -201,10 +221,13 @@ public class GUI extends Application {
             return;
         }
         if (service.createUser(username, name)) {
+            usernameField.clear();
+            nameField.clear();
             window.setScene(logInScene);
             PopUpBox.show("User created succesfully", "User " + username + " (" + name + ") created.");
             return;
         }
+        usernameField.clear();
         PopUpBox.show("Failed to create user", "User " + username + " (" + name + ") cannot be created.\nPlease ensure that you are using unique username.");
     }
 
@@ -321,28 +344,34 @@ public class GUI extends Application {
             observations.addAll(service.getObservationsOfLoggedUserAndChosenSite(selectedSite));
         }
 
-        TableColumn<Observation, Timestamp> timestampCol = new TableColumn<>("Timestamp");
-        timestampCol.setMinWidth(220);
-        timestampCol.setCellValueFactory(new PropertyValueFactory<>("timestamp"));
+        TableColumn<Observation, String> timestampCol = new TableColumn<>("Timestamp\n(year-month-day)");
+        timestampCol.setMinWidth(150);
+        timestampCol.setCellValueFactory(
+                observation -> {
+                    SimpleStringProperty property = new SimpleStringProperty();
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    property.setValue(dateFormat.format(observation.getValue().getTimestamp().getTime()));
+                    return property;
+                });
 
-        TableColumn<Observation, Double> temperatureCol = new TableColumn<>("Temperature (°C)");
-        temperatureCol.setMinWidth(200);
+        TableColumn<Observation, Double> temperatureCol = new TableColumn<>("Temperature\n(°C)");
+        temperatureCol.setMinWidth(130);
         temperatureCol.setCellValueFactory(new PropertyValueFactory<>("temperature"));
 
-        TableColumn<Observation, Double> rhCol = new TableColumn<>("Relative humidity (%RH)");
-        rhCol.setMinWidth(200);
+        TableColumn<Observation, Double> rhCol = new TableColumn<>("Relative humidity\n(%RH)");
+        rhCol.setMinWidth(150);
         rhCol.setCellValueFactory(new PropertyValueFactory<>("rh"));
 
-        TableColumn<Observation, Double> rainfallCol = new TableColumn<>("Rainfall (mm)");
-        rainfallCol.setMinWidth(200);
+        TableColumn<Observation, Double> rainfallCol = new TableColumn<>("Rainfall\n(mm)");
+        rainfallCol.setMinWidth(130);
         rainfallCol.setCellValueFactory(new PropertyValueFactory<>("rainfall"));
 
-        TableColumn<Observation, Double> pressureCol = new TableColumn<>("Pressure (mbar)");
-        pressureCol.setMinWidth(200);
+        TableColumn<Observation, Double> pressureCol = new TableColumn<>("Pressure\n(mbar)");
+        pressureCol.setMinWidth(130);
         pressureCol.setCellValueFactory(new PropertyValueFactory<>("pressure"));
 
         TableColumn<Observation, String> descriptionCol = new TableColumn<>("Description");
-        descriptionCol.setMinWidth(200);
+        descriptionCol.setMinWidth(130);
         descriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
 
         TableColumn<Observation, String> commentCol = new TableColumn<>("Comment");
@@ -512,12 +541,15 @@ public class GUI extends Application {
         String address = addressField.getText();
         String description = descriptionField.getText();
 
-        sitenameField.clear();
-        addressField.clear();
-        descriptionField.clear();
+        if (sitename.length() < 1) {
+            sitenameField.clear();
+            PopUpBox.show("Creating new site failed", "Please ensure that you have entered valid sitename (at least 1 character long).");
+            return false;
+        }
 
-        if (sitename.length() < 1 || address.length() < 3) {
-            PopUpBox.show("Creating new site failed", "Please ensure that you have entered sitename and address\n(at least 1 and 3 characters long, respectively).");
+        if (address.length() < 3) {
+            addressField.clear();
+            PopUpBox.show("Creating new site failed", "Please ensure that you have entered valid address (at least 3 character long).");
             return false;
         }
 
@@ -528,9 +560,13 @@ public class GUI extends Application {
 
         if (service.createSite(site)) {
             PopUpBox.show("Created new site successfully", "Site " + sitename + ", " + address + " (" + description + ") created.");
+            sitenameField.clear();
+            addressField.clear();
+            descriptionField.clear();
             return true;
         }
         PopUpBox.show("Creating new site failed", "Site " + sitename + " could not be created. Please ensure used sitename is unique.");
+        sitenameField.clear();
         return false;
     }
 
