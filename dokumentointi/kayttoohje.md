@@ -1,5 +1,24 @@
 # Käyttöohje
 
+## Ohjelman käyttöönotto ja konfigurointi
+
+Lataa tiedosto [WeatherObservationJournal.jar](https://github.com/toniramo/ot-harjoitustyo/releases/download/loppupalautus/WeatherObservationJournal.jar).
+
+Ohjelma olettaa, että käynnistyshakemistossa on seuraavat asiat:
+ 
+- kansio `images`, jonka sisällä kuvatiedosto [background.png](https://github.com/toniramo/ot-harjoitustyo/blob/master/WeatherObservationJournal/images/background.png). Tätä käytetään taustakuvana sovelluksessa.
+- konfiguraatiotiedosto `config.properties`, joka määrittelee käytettävän SQLite-tietokannan nimen. Sen muoto on `database=woj.db`. Tietokannan nimi ei voi olla wojTest.db eikä tyhjä. Tiedoston puuttuessa tai, jos sen lukemisessa havaitaan virhe, käytetään oletuksena nimeä "woj.db".
+
+Ota nämä huomioon ennen ohjelman käynnistämistä.
+
+## Ohjelman käynnistäminen
+
+Ohjelman voi käynnistää komentoriviltä komennolla
+
+```
+java -jar WeatherObservationJournal.jar
+```
+
 ## Uuden käyttäjätunnuksen luominen
 Sovellus auvautuu kirjautumisnäkymään. Tästä on mahdollista navigoida näkymään, jossa voi luoda uuden käyttäjän painamalla "+ Create new user".
 

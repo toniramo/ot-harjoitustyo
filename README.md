@@ -6,19 +6,23 @@ Sovellus toteutetaan osana Helsingin yliopiston Ohjelmistotekniikka (kevät 2020
 
 ## Dokumentaatio
 
-[vaatimusmaarittely.md](https://github.com/toniramo/ot-harjoitustyo/tree/master/dokumentointi/vaatimusmaarittely.md)
+[Vaatimusmäärittely](https://github.com/toniramo/ot-harjoitustyo/tree/master/dokumentointi/vaatimusmaarittely.md)
 
-[arkkitehtuuri.md](https://github.com/toniramo/ot-harjoitustyo/tree/master/dokumentointi/arkkitehtuuri.md)
+[Arkkitehtuuri](https://github.com/toniramo/ot-harjoitustyo/tree/master/dokumentointi/arkkitehtuuri.md)
 
-[tyoaikakirjanpito.md](https://github.com/toniramo/ot-harjoitustyo/tree/master/dokumentointi/tyoaikakirjanpito.md)
+[Työaikakirjanpito](https://github.com/toniramo/ot-harjoitustyo/tree/master/dokumentointi/tyoaikakirjanpito.md)
 
-[kayttoohje.md](https://github.com/toniramo/ot-harjoitustyo/tree/master/dokumentointi/kayttoohje.md)
+[Käyttöohje](https://github.com/toniramo/ot-harjoitustyo/tree/master/dokumentointi/kayttoohje.md)
+
+[Testausdokumentti](https://github.com/toniramo/ot-harjoitustyo/tree/master/dokumentointi/testausdokumentti.md)
 
 ## Releaset
 
 [Viikko 5](https://github.com/toniramo/ot-harjoitustyo/releases/tag/viikko5)
 
 [Viikko 6](https://github.com/toniramo/ot-harjoitustyo/releases/tag/viikko6)
+
+[loppupalautus](https://github.com/toniramo/ot-harjoitustyo/releases/tag/loppupalautus)
 
 ## Komentorivitoiminnot
 

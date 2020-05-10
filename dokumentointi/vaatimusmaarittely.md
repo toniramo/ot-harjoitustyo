@@ -7,32 +7,34 @@ Sovelluksen avulla käyttäjät voivat pitää henkilökohtaista säähavaintop�
 Sovelluksen perustoiminnallisuuden kannalta olennaista on, että siitä löytyy peruskäyttäjärooli, joka mahdollistaa sovelluksen päätoiminnallisuuksien käytön. Jatkokehitystavoitteena on lisätä myös admin-tason käyttäjärooli, joka voi hallinnoida sovelluksen käyttäjiä ja heidän tietojaan sekä tarkastella jokaisen käyttäjän lisäämiä merkintöjä. Peruskäyttäjä voi tarkastella ja hallinnoida vain omia tietojaan - ellei käyttäjähallintaa tehdä edistyneemmäksi jatkossa.
 
 ## Suunnitellut toiminnallisuudet
-:heavy_check_mark:-merkki tarkoittaa, että toiminto on toteutettu. Mahdolliset viitteet lisähuomioille toteutukseen liittyen lisätty :heavy_check_mark:-merkin perään.
+
 ### Ennen kirjautumista
-- :heavy_check_mark: käyttäjä voi luoda käyttäjätunnuksen sovellusta varten
-  - :heavy_check_mark: Tunnuksen on oltava uniikki ja sisältää vähintään yhden merkin
-- :heavy_check_mark: käyttäjä voi kirjautua järjestelmään jo olemassa olevalla tunnuksella
-  - :heavy_check_mark: salasanan käyttöä ei vaadita perustoiminnallisuuden näkökulmasta
+- käyttäjä voi luoda käyttäjätunnuksen sovellusta varten
+  - Tunnuksen on oltava uniikki ja sisältää vähintään yhden merkin
+- käyttäjä voi kirjautua järjestelmään jo olemassa olevalla tunnuksella
+  - salasanan käyttöä ei vaadita perustoiminnallisuuden näkökulmasta eikä tukea sille ole toistaiseksi toteutettu
 
 ### Kirjauduttua
-- :heavy_check_mark: käyttäjä näkee omat säähavaintokohteensa
-- :heavy_check_mark: käyttäjä voi luoda uuden havaintokohteen
-  - :heavy_check_mark: kohteen nimen tulee olla uniikki ja vähintään yhden merkkin pituinen
-- :heavy_check_mark: käyttäjä voi valita olemassa olevan havaintokohteensa ja tarkastella tämän tietoja
-  - :heavy_check_mark: käyttöliittymä näyttää kohteelle merkityn numeerisen tiedon graafilla
-  - :heavy_check_mark: kohteen tietoja voi tarkastella myös päivätasolla, jolloin käyttäjä näkee merkinnän tarkemmat tiedot
-  - :heavy_check_mark: <sup>0</sup> kohteiden päiväkohtaiset tiedot sisältävät päivän keskiarvolämpötilan (ja haluttaessa min/max lämpötilat), ilmankosteuden, sademäärän, sään kuvauksen (kuten selkeää, vaihtelevaa, pilvistä, puolipilvistä, sateista, ukkosta) ja vapaamuotoisen kommentin.
-- :heavy_check_mark: käyttäjä voi valita havaintokohteen ja lisätä uuden säähavainnon kohteelle
-  - :heavy_check_mark: syötettävien tietojen tulee vastata edellä mainittua listausta kohteiden päiväkohtaisista tiedoista
-  - :heavy_check_mark:<sup>1</sup> tiedot lisätään päivätasolla, päivämäärän on oltava järkevä eikä samalle päivälle voi perustoiminnallisuuden puitteissa lisätä kuin yhden merkinnän per kohde (lisäämällä merkinnän jo olemassa olevalle päivälle vanha yliajetaan).
-  - :heavy_check_mark: käyttöliittymän tulee validoida käyttäjän syöte ja tarkistaa, että syötetyt arvot ovat järkeviä (esimerkiksi lämpötila on [-60,+60]°C, suhteellinen kosteus 0...100 %RH, sademäärä >= 0 mm)
-  - :heavy_check_mark: sään kuvaus valitaan esityötettyjen vaihtoehtojen joukosta (esimerkkejä mainittu edellä)
-  - :heavy_check_mark:<sup>2</sup> kommentti voi olla tyhjä tai rajoitettu esimerkiksi 100 merkkiin  
-- :heavy_check_mark: käyttäjä voi kirjautua ulos
-
-<sup>0) Tämä on toteutettu vaihtoehtoisella taulukkonäkymällä. Tarjolla olevat säänkuvaukset voivat hieman poiketa esimerkkinä annetuista. Min ja max - lämpötiloja ei ole tällä hetkellä saatavilla.</sup>
-<sup>1) Sovellus ei tällä hetkellä validoi löytyykö tietylle tietyllä ajanhetkellä jo mittausta, vaan sovellus näyttää vain toisen mahdollisista duplikaatti-merkinnöistä; </sup>
-<sup>2) 100 merkin rajoitusta ei toistaiseksi ole</sup>
+- käyttäjä näkee omat säähavaintokohteensa
+- käyttäjä voi luoda uuden havaintokohteen
+  - kohteen nimen tulee olla uniikki ja vähintään yhden merkkin pituinen
+  - kohteella tulee olla osoite, joka on vähintään kolmen merkin pituinen
+  - kohteelle voi antaa kuvauksen, mutta kentän voi myös jättää tyhjäksi
+- käyttäjä voi valita olemassa olevan havaintokohteensa ja tarkastella tämän tietoja joko graafilla tai tekstimuodossa
+  - käyttöliittymä näyttää kohteelle merkityn numeerisen tiedon graafilla
+  - vaihtoehtoisesti käyttöliittymä näyttää havaintotiedot tekstimuodossa taulukkonäkymänä
+  - käyttäjä voi vaihtaa näkymää halutessaan
+  - kohteiden päiväkohtaiset tiedot sisältävät päivämäärän, lämpötilan, ilmankosteuden, sademäärän, sään kuvauksen: aurinkoista (Sunny), pilvistä (Cloudy), sateista (Rainy), myrskyisää (Stormy) sekä vapaamuotoisen kommentin.
+- käyttäjä voi valita havaintokohteen ja valittuaan lisätä uuden säähavainnon kohteelle
+  - käyttäjä voi vaihtaa päivämäärää, jos se on joku muu kuin kyseinen päiväkohtaiset
+  - käyttäjän tulee syöttää validi lämpötila välillä -60 ja +60 astetta
+  - käyttäjän tulee syöttää validi ilmankosteus välillä 0 ja 100%RH
+  - käyttäjän tulee syöttää validi sademäärä (suurempi tai yhtäsuuri kuin 0 mm)
+  - käyttäjän tulee syöttää validi ilmanpaine (suurempi kuin 0 mbar)
+  - käyttäjän tulee valita joku neljästä säänkuvauksesta
+  - käyttäjä voi halutessaan syöttää kommentin tai jättää kentän tyhjäksi
+  - käyttöliittymä validoi syötteet havaintoa lisättäessä ja ilmoittaa, mikäli syötteissä on virheitä
+- käyttäjä voi kirjautua ulos
 
 ## Käyttöliittymäluonnos
 Sovelluksen avatuessa käyttöliittymä aukeaa kirjautumissivulle, jossa käyttäjä voi joko kirjautua olemassa olevalla tunnuksella sisään tai luoda uuden tunnuksen. Kirjautumisen jälkeen avautuu niin sanottu päänäkymä, jossa listataan kirjautuneen käyttäjän kohteet ja näytetään valitun kohteen yksityiskohtaisemmat havaintotiedot. Näkymästä on mahdollisuus myös siirtyä luomaan uusi kohde tai uusi havaintomerkintä valitulle kohteelle. Käyttöliittymään olisi tarkoitus toteuttaa pudotusvalikko, jonka takaa löytyy toiminnot esimerkiksi käyttäjätietojen hallintaan ja uloskirjautumiseen. Käyttöliittymään on mahdollisuus toteuttaa palauteviestejä syötteiden yhteyteen, jotta käyttäjä tietää onko syöte ollut validi vai ei (ja miksi, jos ei).

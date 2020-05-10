@@ -27,4 +27,7 @@
 |            | 1.5h       | Testikattavuuden parantaminen. |
 | 27.04.2020 | 3h       | Dokumentaatiota: JavaDocin luominen. Käyttöohjeiden ja alustavan arkkitehtuurikuvauksen toteutus. |
 | 28.04.2020 | 0.5      | Dokumentaation päivitys. |
-| **Yhteensä**   | **65h**   | |
+| 10.05.2020 | 2h       | Testauksen laajentaminen ja testidokumentaation luominen. | 
+| 10.05.2020 | 2h       | Sovelluslogiikan laajentaminen ja koodin tarkistaminen. |
+| 10.05.2020 | 4h       | Sovelluksen dokumentaation päivittäminen. |
+| **Yhteensä**   | **73h**   | |
