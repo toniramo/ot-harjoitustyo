@@ -86,8 +86,6 @@ public class SQLiteObservationDao implements ObservationDao {
             int userId = rs.getInt("user_id");
             int siteId = rs.getInt("site_id");
             
-            
-
             ps = connection.prepareStatement("INSERT INTO Observations (timestamp, temperature, rh, rainfall, pressure, description, comment, site_id, user_id) VALUES (?,?,?,?,?,?,?,?,?);");
             ps.setTimestamp(1, observation.getTimestamp());
             ps.setDouble(2, observation.getTemperature());
