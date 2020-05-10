@@ -61,6 +61,7 @@
                 <configuration>
                     <excludes>
                         <exclude>woj/ui/*</exclude>
+                        <exclude>woj/Main*</exclude>
                     </excludes>
                 </configuration>
                 <executions>
